@@ -6,12 +6,7 @@ function App() {
   //--- J S ---\\
   let url ="https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json"
   let text1='';
-    
-  let game_tokens = [];
-  let wallet_tokens = [];
-  let defi_tokens = [];
-  let meme_tokens = [];
-  let notag_tokens = [];
+
 
   fetch(url)
   .then(response => response.json())
@@ -25,7 +20,11 @@ function App() {
     //Define our rendered tokens by tags
     console.log(last_300[188].tags);
 
-
+    let game_tokens = [];
+    let wallet_tokens = [];
+    let defi_tokens = [];
+    let meme_tokens = [];
+    let notag_tokens = [];
     
     for(let i=0; i<last_300.length; i++){
 

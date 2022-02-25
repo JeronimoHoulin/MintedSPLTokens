@@ -1,5 +1,7 @@
 import React, { Component } from 'react'; //import 'React' default export, and { Component } non-default export from react
 import fetch from 'isomorphic-fetch'; // isomorphic-fetch is used for both server side and client side 'fetch' (see https://github.com/matthew-andrews/isomorphic-fetch)
+import gettokens from './components/tokenregistry'
+
 // App.css was a hangover from the create-react-app, it's not really needed for this basic example
 const url = "https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json"; // API
 
@@ -15,7 +17,7 @@ class App extends Component { // This is the same as 'extends 'React.Component'
         };
     }
 
-  fetchIt = () => {
+    fetchIt = () => {
       console.log('fetching it');
       fetch(url, { mode: 'cors' }) // Make sure fetch is cross-origin, it's not by default (see https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) since the target URL of the API is a different 'origin' to our react app
           .then((resp) => {
@@ -177,78 +179,86 @@ class App extends Component { // This is the same as 'extends 'React.Component'
           .catch(function(error) {
               console.log(JSON.stringify(error));
           });
+
   }
 
 
 
     render() {
-      if(!this.state.fetchedData){ // only do the fetch if there is no fetchedData already (BTW this will run many times if the API is unavailable, or 'fetchIt() encounters an error)
+
+        let element = 421;
+        console.log(element);
+        
+        
+        if(!this.state.fetchedData){ // only do the fetch if there is no fetchedData already (BTW this will run many times if the API is unavailable, or 'fetchIt() encounters an error)
           this.fetchIt();
-    }
+    
+      
 
 
-
-    return (
-        <>
-        <div>        
-            {console.log("TUPUTAMADRETABLADELORTO")}
-        </div>
-
-        <div>
-            <div>
+            return (
                 <div>
-                    {
-                        this.state.fetchedData ? `fetched ${this.state.fetchedData.length} entries`  : 'no data' // This is a 'ternary' expression, a simple 'if->else'
-                        /* equivalent to:
-
-                            if(this.state.fetchedData) {
-                                return `fetched ${this.state.fetchedData.length} entries`; // this is 'javascript string interpolation'
-                            } else {
-                                return 'no data';
-                            }
-                        *
-                        * */
-                    }
-                </div>
-
-                <div className="app-container"> Game tags !
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Token</th>
-                                <th>Tikker</th>
-                                <th>Description</th>
-                                <th>Adress</th>
-                                <th>Extensions</th>
-                            </tr>
-                        </thead>
+                    <gettokens />
+                    <div>
+                        Hey{}, whatsupp !
+                    </div>
 
 
-                        <tbody>
+                    <div>
+                        {this.state.fetchedData ? `fetched ${this.state.fetchedData.length} entries` : 'no data' // This is a 'ternary' expression, a simple 'if->else'
+                            /* equivalent to:
+                        
+                                if(this.state.fetchedData) {
+                                    return `fetched ${this.state.fetchedData.length} entries`; // this is 'javascript string interpolation'
+                                } else {
+                                    return 'no data';
+                                }
+                            *
+                            * */
+                        }
+                    </div>
+
+                    <div className="app-container"> Game tags !
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Token</th>
+                                    <th>Tikker</th>
+                                    <th>Description</th>
+                                    <th>Adress</th>
+                                    <th>Extensions</th>
+                                </tr>
+                            </thead>
 
 
-                            {this.state.fetchedData.Game.map((token)=>{
-                                return(
-                                    <tr>
-                                        <td>{token.logo}</td>
-                                        <td>{token.Symbol}</td>
-                                        <td>{token.Name}</td>
-                                        <td>{token.Address}</td>
-                                        <td>{token.Extrensions}</td>
-                                    </tr>
-                                )}
+                            <tbody>
+
+
+                                {this.state.fetchedData.Game.map((token) => {
+                                    return (
+                                        <tr>
+                                            <td>{token.logo}</td>
+                                            <td>{token.Symbol}</td>
+                                            <td>{token.Name}</td>
+                                            <td>{token.Address}</td>
+                                            <td>{token.Extrensions}</td>
+                                        </tr>
+                                    );
+                                }
                             )}
 
 
                         </tbody>
                     </table>
                 </div>
-            </div> 
+            </div>
 
-        </div>
-        </>   
-            
-    );
+
+        );}
+        
+        else{return( 
+        <h1>hi</h1>
+        )};
   }
 }
 
