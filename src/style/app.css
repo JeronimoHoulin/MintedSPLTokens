@@ -1,0 +1,14 @@
+body{
+    background-color: rgba(0, 0, 0, 0.719);
+    margin:0;
+    color: white;
+    font-family: 'Prompt', sans-serif;
+
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+.header1{
+    color: #f80c3f9f;
+}

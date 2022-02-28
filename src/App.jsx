@@ -1,6 +1,11 @@
 import react from 'react'
 import DataFetch from './components/Datafetching'
 import GameFetch from './components/ByVertical/game_tokens'
+import DefiFetch from './components/ByVertical/defi_tokens'
+import MetaverseFetch from './components/ByVertical/metaverse_tokens'
+import MemeFetch from './components/ByVertical/meme_tokens'
+import NotagFetch from './components/ByVertical/notag_tokens'
+
 
 function App() {
 
@@ -11,6 +16,10 @@ function App() {
             <div className="components">
                 <DataFetch />
                 <GameFetch />
+                <DefiFetch />
+                <MetaverseFetch />
+                <MemeFetch />
+                <NotagFetch />
             </div>
         </div>
         )

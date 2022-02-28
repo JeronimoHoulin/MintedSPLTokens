@@ -1,4 +1,3 @@
-import { getChildren } from 'domutils';
 import React, { useEffect, useState } from 'react'
 const parse = require('html-react-parser');
 
@@ -6,16 +5,16 @@ const parse = require('html-react-parser');
 function GameFetch (){
 
     const [gamez, setGamez] = useState([]) 
-    const [show, setShow] = useState(true)
+    const [show, setShow] = useState(false)
     let [table, setTable] = useState("")
-    let [extensions, setExt] = useState("")
+    //let [extensions, setExt] = useState("")
 
     useEffect(() => { 
         let url ="https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json"
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            //console.log(data.tokens)
+            console.log(data.tokens)
             let token_list = data.tokens;
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
@@ -58,23 +57,32 @@ function GameFetch (){
                 <th style="width:15%;">Symbol</th>
                 <th style="width:5%;">Name</th>
                 <th style="width:5%;">Address</th>
-                <th style="width:20%;">Extensions</th>
                 <th style="width:20%;">Tags</th>
+                <th style="width:20%;">Extensions</th>
             </tr>`;
 
             for(let i = 0; i < game_tokens.length; i++){
+                [game_tokens[i].Extensions].map(links=>{
+                    var linksy = []
+                    if(links){
+                        console.log(links)
+                        linksy.push(links)
+                    }
 
 
-                    _html += `<tr>
-                                <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
-                                <td>${game_tokens[i].Symbol}</td>
-                                <td>${game_tokens[i].Name}</td>
-                                <td>${game_tokens[i].Address}</td>
-                                <td>${[game_tokens[6].Extensions].map(link=>{
-                                    console.log(getChildren(link))
-                                })}</td>
-                                <td>${game_tokens[i].Tags}</td>
-                            </tr>`;
+                _html += `<tr>
+                            <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
+                            <td>${game_tokens[i].Symbol}</td>
+                            <td>${game_tokens[i].Name}</td>
+                            <td>${game_tokens[i].Address}</td>
+                            <td>${game_tokens[i].Tags}</td>
+
+                            <td>${
+                                JSON.stringify(linksy)
+                            }</td>
+                        </tr>`;
+
+                    })
 
 
             }
@@ -94,7 +102,7 @@ function GameFetch (){
     ///return (divs)
     return(
         <div className="gametable">
-            <h2>{`There are ${gamez.length} newly minted GAME tokens.  Show table => ${show}`}</h2>
+            <h2>{`There are ${gamez.length} newly minted GAME tokens.`}</h2>
             <button
                 onClick={() => setShow(!show)}
             >
