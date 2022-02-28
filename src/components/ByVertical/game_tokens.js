@@ -65,8 +65,26 @@ function GameFetch (){
                 [game_tokens[i].Extensions].map(links=>{
                     var linksy = []
                     if(links){
-                        console.log(links)
-                        linksy.push(links)
+                        //console.log(links.website)
+                        let stringit = []
+                        if (links.website) {
+                            stringit += `<a href="${links.website}">WEB //</a>`
+                        }if (links.discord) {
+                            stringit += `<a href="${links.discord}">DI //</a>`
+                            
+                        }if (links.telegram) {
+                            stringit += `<a href="${links.telegram}">TG //</a>`
+                            
+                        }if (links.youtube) {
+                            stringit += `<a href="${links.youtube}">YOU //</a>`
+                            
+                        }if (links.twitter) {
+                            stringit += `<a href="${links.twitter}">TW //</a>`
+                            
+                        }
+                        
+                        
+                        linksy.push(stringit)
                     }
 
 
@@ -78,7 +96,7 @@ function GameFetch (){
                             <td>${game_tokens[i].Tags}</td>
 
                             <td>${
-                                JSON.stringify(linksy)
+                                linksy
                             }</td>
                         </tr>`;
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-//import { DATA } from './Fetcher'
+import { DATA } from './Fetcher'
 
-//console.log("THIS IS DATA" + typeof UserTableReactHooks)
+console.log("THIS IS DATA" + DATA)
 
 function DataFetch (){
 

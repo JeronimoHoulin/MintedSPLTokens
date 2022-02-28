@@ -14,7 +14,7 @@ function NotagFetch (){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data.tokens)
+            //console.log(data.tokens)
             let token_list = data.tokens;
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
@@ -61,8 +61,26 @@ function NotagFetch (){
                 [notag_tokens[i].Extensions].map(links=>{
                     var linksy = []
                     if(links){
-                        console.log(links)
-                        linksy.push(links)
+                        //console.log(links.website)
+                        let stringit = []
+                        if (links.website) {
+                            stringit += `<a href="${links.website}">WEB //</a>`
+                        }if (links.discord) {
+                            stringit += `<a href="${links.discord}">DI //</a>`
+                            
+                        }if (links.telegram) {
+                            stringit += `<a href="${links.telegram}">TG //</a>`
+                            
+                        }if (links.youtube) {
+                            stringit += `<a href="${links.youtube}">YOU //</a>`
+                            
+                        }if (links.twitter) {
+                            stringit += `<a href="${links.twitter}">TW //</a>`
+                            
+                        }
+                        
+                        
+                        linksy.push(stringit)
                     }
 
 
@@ -74,7 +92,7 @@ function NotagFetch (){
                             <td>${notag_tokens[i].Tags}</td>
 
                             <td>${
-                                JSON.stringify(linksy)
+                                linksy
                             }</td>
                         </tr>`;
 
