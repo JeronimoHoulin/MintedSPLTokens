@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# First React app; Newly minted SPL token tracker-type dashboard.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Created for Solana Prime (https://solanaprime.com).
 
 ## Available Scripts
 
