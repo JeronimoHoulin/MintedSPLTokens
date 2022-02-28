@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Created for Solana Prime (https://solanaprime.com).
+Supports SolanaPrime's business development team (https://solanaprime.com).
 
 ## Available Scripts
 
