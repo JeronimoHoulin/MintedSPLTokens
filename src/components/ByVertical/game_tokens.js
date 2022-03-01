@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { Fragment } from 'react'; // import Fragment from React
+import { BsGlobe2 } from "react-icons/bs";
 const parse = require('html-react-parser');
 
 
@@ -64,11 +66,13 @@ function GameFetch (){
             for(let i = 0; i < game_tokens.length; i++){
                 [game_tokens[i].Extensions].map(links=>{
                     var linksy = []
+
                     if(links){
                         //console.log(links.website)
                         let stringit = []
                         if (links.website) {
-                            stringit += `<a href="${links.website}">WEB //</a>`
+                            let webinator = <BsGlobe2 />
+                            stringit += `<a href="${links.website}"> ${<BsGlobe2 />} //</a>`
                         }if (links.discord) {
                             stringit += `<a href="${links.discord}">DI //</a>`
                             
@@ -115,11 +119,13 @@ function GameFetch (){
         
 
     }, [])
+
     //console.log(gamez)
 
     ///return (divs)
     return(
         <div className="gametable">
+
             <h2>{`There are ${gamez.length} newly minted GAME tokens.`}</h2>
             <button
                 onClick={() => setShow(!show)}
