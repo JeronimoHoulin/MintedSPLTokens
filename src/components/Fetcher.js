@@ -1,4 +1,34 @@
 /*
+FetchDataAxios = () => {
+    this.setState({...this.state, isFetching: true});
+    axios.get("https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json")
+    .then(response => {
+       this.setState({Tokens: response.data.tokens, isFetching:  false})
+    })
+    .catch(exception => {
+       console.log(exception);
+       this.setState({...this.state, isFetching: false});
+    });
+  };
+  
+FetchData = this.FetchDataAxios;
+*/
+
+export async function getSPLs () {
+
+    const res = await fetch("https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json");
+    const json = await res.json();
+    const tokens = json.tokens
+    return tokens;
+}
+export default {getSPLs};
+
+
+
+
+
+
+/*
 import react from 'react'
 
 
@@ -25,7 +55,7 @@ console.log("this is pre-data"+ data_mini)
 
 export const DATA = data_mini
 */
-
+/*
 import React,{useEffect,useState} from 'react';
 import axios from 'axios';
 
@@ -54,3 +84,4 @@ export const DATA=()=>{
 }
 
 export default DATA;
+*/
