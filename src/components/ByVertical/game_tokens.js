@@ -115,6 +115,9 @@ function GameFetch (){
                             <td>${
                                 linksy
                             }</td>
+                            <td>{
+                                3
+                            }</td>
                         </tr>`;
 
                     })
