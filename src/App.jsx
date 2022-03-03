@@ -5,7 +5,6 @@ import MetaverseFetch from './components/ByVertical/metaverse_tokens'
 import MemeFetch from './components/ByVertical/meme_tokens'
 import NotagFetch from './components/ByVertical/notag_tokens'
 import Refresh from './components/refresher'
-import DATABASE from './components/recivrr'
 
 function App() {
 
@@ -14,7 +13,6 @@ function App() {
             <h1>Solana Prime Newly Minted!</h1>
             
             <div className="components">
-                <DATABASE />
                 <DataFetch />
                 <Refresh />
                 <GameFetch />

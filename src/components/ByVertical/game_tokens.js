@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Fragment } from 'react'; // import Fragment from React
-import { BsGlobe2 } from "react-icons/bs";
 const parse = require('html-react-parser');
-
 
 function GameFetch (){
 
@@ -71,26 +68,42 @@ function GameFetch (){
                         //console.log(links.website)
                         let stringit = []
                         if (links.website) {
-                            let webinator = <BsGlobe2 />
-                            stringit += `<a href="${links.website}"> ${<BsGlobe2 />} //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.website}">&#127760; // </a>`
                         }if (links.discord) {
-                            stringit += `<a href="${links.discord}">DI //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.discord}">&#128483; DI // </a>`
                             
                         }if (links.telegram) {
-                            stringit += `<a href="${links.telegram}">TG //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.telegram}">&#128488; TG// </a>`
                             
                         }if (links.youtube) {
-                            stringit += `<a href="${links.youtube}">YOU //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.youtube}">&#127909; // </a>`
                             
                         }if (links.twitter) {
-                            stringit += `<a href="${links.twitter}">TW //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.twitter}">&#128037; // </a>`
                             
+                        }if (links.assetContract) {
+                            stringit += `<a style="text-decoration: none; color:black;"
+                            href="${links.assetContract}">&#128196; // </a>`
+
+                        }if (links.medium) {
+                            stringit += `<a style="text-decoration: none; color:black;"
+                            href="${links.medium}"> Medium // </a>`
+
+                        }if (links.whitepaper) {
+                            stringit += `<a style="text-decoration: none; color:black;"
+                            href="${links.whitepaper}"> Whitepaper // </a>`
+
                         }
+                        
                         
                         
                         linksy.push(stringit)
                     }
-
 
                 _html += `<tr>
                             <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
@@ -123,6 +136,7 @@ function GameFetch (){
     //console.log(gamez)
 
     ///return (divs)
+    //console.log(parse(table))
     return(
         <div className="gametable">
 

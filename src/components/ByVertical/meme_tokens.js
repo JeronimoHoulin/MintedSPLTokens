@@ -68,19 +68,36 @@ function MemeFetch (){
                         //console.log(links.website)
                         let stringit = []
                         if (links.website) {
-                            stringit += `<a href="${links.website}">WEB //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.website}">&#127760; // </a>`
                         }if (links.discord) {
-                            stringit += `<a href="${links.discord}">DI //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.discord}">&#128483; DI // </a>`
                             
                         }if (links.telegram) {
-                            stringit += `<a href="${links.telegram}">TG //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.telegram}">&#128488; TG// </a>`
                             
                         }if (links.youtube) {
-                            stringit += `<a href="${links.youtube}">YOU //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.youtube}">&#127909; // </a>`
                             
                         }if (links.twitter) {
-                            stringit += `<a href="${links.twitter}">TW //</a>`
+                            stringit += `<a style="text-decoration: none; color:black;" 
+                            href="${links.twitter}">&#128037; // </a>`
                             
+                        }if (links.assetContract) {
+                            stringit += `<a style="text-decoration: none; color:black;"
+                            href="${links.assetContract}">&#128196; // </a>`
+
+                        }if (links.medium) {
+                            stringit += `<a style="text-decoration: none; color:black;"
+                            href="${links.medium}"> Medium // </a>`
+
+                        }if (links.whitepaper) {
+                            stringit += `<a style="text-decoration: none; color:black;"
+                            href="${links.whitepaper}"> Whitepaper // </a>`
+
                         }
                         
                         

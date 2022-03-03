@@ -1,3 +1,41 @@
+import headerone from './recivrr'
+//console.log(headerone)
+import React, { Component } from 'react';
+
+class anashi extends Component {
+  render() {
+    const data = 'this shit is ur data mf';
+
+    return (
+      <div>
+        <headerone yourdatax={data} />
+      </div>
+    );
+  }
+}
+
+export default anashi
+
+
+
+/*
+import {Axios} from 'react'
+
+fetchEmployeesAxios = () => {
+    this.setState({...this.state, isFetching: true});
+    Axios.get("https://domain.in/api/employees")
+    .then(response => {
+       this.setState({employees: response.data, isFetching:  false})
+    })
+    .catch(exception => {
+       console.log(exception);
+       this.setState({...this.state, isFetching: false});
+    });
+  };
+  
+  export default fetchEmployees = this.fetchEmployeesAxios; 
+  
+*/
 /*
 FetchDataAxios = () => {
     this.setState({...this.state, isFetching: true});
@@ -13,7 +51,7 @@ FetchDataAxios = () => {
   
 FetchData = this.FetchDataAxios;
 */
-
+/*
 export async function getSPLs () {
 
     const res = await fetch("https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json");
@@ -22,7 +60,7 @@ export async function getSPLs () {
     return tokens;
 }
 export default {getSPLs};
-
+*/
 
 
 

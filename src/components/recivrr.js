@@ -1,21 +1,9 @@
-import React, {Component} from 'react';
-import { getSPLs } from './Fetcher'
-console.log(getSPLs)
+import React, { Component } from 'react';
 
-function DATABASE (){
-
-
-
-
-
-
-    return(
-        <div>
-            <h1>
-                {getSPLs}
-            </h1>
-
-        </div>
-    )
-}
-export default DATABASE
+class headerone extends Component {
+    render() {
+      return <h1>{this.props.yourdatax}</h1>;
+    }
+  }
+  
+  export default headerone;
