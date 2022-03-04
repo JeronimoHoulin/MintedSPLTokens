@@ -18,7 +18,7 @@ function GameFetch (){
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
-            const token_300 = token_list.slice(-300);
+            const token_300 = token_list.slice(-500);
 
 
             let game_tokens = [];
@@ -58,6 +58,8 @@ function GameFetch (){
                 <th style="width:5%;">Address</th>
                 <th style="width:20%;">Tags</th>
                 <th style="width:20%;">Extensions</th>
+                <th style="width:20%;">Timestamp</th>
+
             </tr>`;
 
             for(let i = 0; i < game_tokens.length; i++){
@@ -116,7 +118,7 @@ function GameFetch (){
                                 linksy
                             }</td>
                             <td>{
-                                3
+                                
                             }</td>
                         </tr>`;
 
