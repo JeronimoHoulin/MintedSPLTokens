@@ -146,7 +146,7 @@ function GameFetch (){
     //console.log(parse(table))
 
     let reactTable = parse(table)
-
+    console.log(reactTable);
     let links_arr = []
     let adrs_arr = []
     let time_arr = []
@@ -158,9 +158,9 @@ function GameFetch (){
             if(item.key === "0"){
                 //console.log(item)
             }else{
-                //console.log(item.props.children[3].props.children)
+                console.log(item.props.children[3].props.children)
                 //HERE I GET THE ADDRESSES
-                //console.log(item.props.children[6].props.children)
+                console.log(item.props.children[6].props.children)
                 //HERE I APPEND THE TIMESTAMPS
                 adrs_arr.push(item.props.children[3].props.children)
                 links_arr.push(`https://public-api.solscan.io/account/transactions?account=${item.props.children[3].props.children}`)
