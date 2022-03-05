@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
+import axios from "axios";
+
 const parse = require('html-react-parser');
+
+let game_tokens = [];
+
 
 function GameFetch (){
 
     const [gamez, setGamez] = useState([]) 
+    const [adressez, setAdressez] = useState([])
     const [show, setShow] = useState(false)
     let [table, setTable] = useState("")
     //let [extensions, setExt] = useState("")
@@ -16,13 +22,9 @@ function GameFetch (){
             console.log(data.tokens)
             let token_list = data.tokens;
             //console.log(token_list.length);
-                                  //NOW THE TOKENS ARE ALL ADED TO " tokens "
+                                //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
             const token_300 = token_list.slice(-500);
-
-
-            let game_tokens = [];
-
 
             for(let i=0; i<token_300.length; i++){
 
@@ -41,7 +43,7 @@ function GameFetch (){
                         "logo": token_300[i].logoURI,
                         "Extensions":token_300[i].extensions,
                         "Category": "Game"
-                      })
+                    })
                 }
                 //////////////////////////////////////////////////
             }
@@ -63,6 +65,7 @@ function GameFetch (){
             </tr>`;
 
             for(let i = 0; i < game_tokens.length; i++){
+
                 [game_tokens[i].Extensions].map(links=>{
                     var linksy = []
 
@@ -111,7 +114,7 @@ function GameFetch (){
                             <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
                             <td>${game_tokens[i].Symbol}</td>
                             <td>${game_tokens[i].Name}</td>
-                            <td>${game_tokens[i].Address}</td>
+                            <td class = "NASHI">${game_tokens[i].Address}</td>
                             <td>${game_tokens[i].Tags}</td>
 
                             <td>${
@@ -132,16 +135,85 @@ function GameFetch (){
             //console.log(table)
         })
         .catch((error) => {
-          console.error('The error is:', error);
+        console.error('The error is:', error);
         });
-        
+
 
     }, [])
 
-    //console.log(gamez)
 
-    ///return (divs)
+
     //console.log(parse(table))
+
+    let reactTable = parse(table)
+
+    let links_arr = []
+    let adrs_arr = []
+    let time_arr = []
+    
+    const [intel, setIntel] =useState([])
+    useEffect(() => { 
+        reactTable.map((item)=>{
+            //console.log(item)
+            if(item.key === "0"){
+                //console.log(item)
+            }else{
+                //console.log(item.props.children[3].props.children)
+                //HERE I GET THE ADDRESSES
+                //console.log(item.props.children[6].props.children)
+                //HERE I APPEND THE TIMESTAMPS
+                adrs_arr.push(item.props.children[3].props.children)
+                links_arr.push(`https://public-api.solscan.io/account/transactions?account=${item.props.children[3].props.children}`)
+            }
+        })
+
+        console.log(adrs_arr)
+
+
+        function getAllData(links_arr){
+            return Promise.all(links_arr.map(fetchData));
+        }
+        
+        async function fetchData(URL) {
+            try {
+                const response = await axios
+                    .get(URL);
+                return {
+                    success: true,
+                    data: response.data
+                };
+            } catch (error) {
+                return { 
+                    success: false,
+                    data:"nodatefound"
+                };
+            }
+        }
+        
+        getAllData(links_arr.slice(0,5)).then(resp=>{
+            console.log(resp)
+            for(let i=0; i<resp.length;i++){       
+                try{     
+                    let data = resp[i].data
+                    let timest = data[data.length-1].blockTime
+                    //console.log(timest)
+                    time_arr.push(timest)
+
+                    
+                    setIntel(timest)
+                    console.log(time_arr)
+                    return [timest, null]
+                    
+                }catch(e){return ["No date found", e]}
+            }
+
+            }).catch(e=>{console.log(e)})
+
+        //console.log(time_arr)
+
+    }, [])
+
+
     return(
         <div className="gametable">
 
