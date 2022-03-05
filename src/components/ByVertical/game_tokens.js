@@ -142,16 +142,17 @@ function GameFetch (){
     }, [])
 
 
-
-    //console.log(parse(table))
+////////////////////  GET TIMESTAMPS  //////////////////// 
+    console.log(parse(table))
 
     let reactTable = parse(table)
 
-    let links_arr = []
+    //let links_arr = []
     let adrs_arr = []
-    let time_arr = []
+    //let time_arr = []
     
     const [intel, setIntel] =useState([])
+
     useEffect(() => { 
         reactTable.map((item)=>{
             //console.log(item)
@@ -163,53 +164,44 @@ function GameFetch (){
                 //console.log(item.props.children[6].props.children)
                 //HERE I APPEND THE TIMESTAMPS
                 adrs_arr.push(item.props.children[3].props.children)
-                links_arr.push(`https://public-api.solscan.io/account/transactions?account=${item.props.children[3].props.children}`)
+                //links_arr.push(`https://public-api.solscan.io/account/transactions?account=${item.props.children[3].props.children}`)
             }
         })
 
-        console.log(adrs_arr)
+        console.log(adrs_arr.length)
 
+        let intel_dict= []
 
-        function getAllData(links_arr){
-            return Promise.all(links_arr.map(fetchData));
-        }
-        
-        async function fetchData(URL) {
-            try {
-                const response = await axios
-                    .get(URL);
-                return {
-                    success: true,
-                    data: response.data
-                };
-            } catch (error) {
-                return { 
-                    success: false,
-                    data:"nodatefound"
-                };
-            }
-        }
-        
-        getAllData(links_arr.slice(0,5)).then(resp=>{
-            console.log(resp)
-            for(let i=0; i<resp.length;i++){       
-                try{     
-                    let data = resp[i].data
-                    let timest = data[data.length-1].blockTime
-                    //console.log(timest)
-                    time_arr.push(timest)
+        axios.all(adrs_arr.slice(0,5).map((adresx) => axios.get(`https://public-api.solscan.io/account/transactions?account=${adresx}`))).then(
+            (data) => {
+                console.log(data);
+                data.map((item)=>{
+                    if(item.data.length > 0){
+                        //console.log(item.data)
+                        let timest = item.data[item.data.length-1].blockTime
+                        console.log(timest)
+                        
+                        intel_dict.push({
+                            "Address": "AN ADDRESS", //COMO ME ASEGURO QUE ESTE ADRES COINCIDE CON LA RESPUESTA DEL TIMESTAMP..?
+                            "Timestamp": timest
+                        })
 
+                    }else{
+                        intel_dict.push({
+                            "Address": "ANADRESS", 
+                            "Timestamp": "No time found..."
+                        })
+
+                    }
                     
-                    setIntel(timest)
-                    console.log(time_arr)
-                    return [timest, null]
-                    
-                }catch(e){return ["No date found", e]}
+                })
+                console.log(intel_dict)
+
             }
+        );
 
-            }).catch(e=>{console.log(e)})
 
-        //console.log(time_arr)
+
 
     }, [])
 
