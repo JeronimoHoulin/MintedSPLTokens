@@ -102,6 +102,7 @@ function GameFetch (){
                             }
                         );
                     }
+                    from +=5
 
                     for(let i=0; i<game_tokens.length;i++){
                         game_tokens[i]["Timestamp"] = time_arr[i]
@@ -110,8 +111,7 @@ function GameFetch (){
                     let game_dict = game_tokens
                     setGamedict(game_dict)
 
-                    //console.log(game_tokens)
-                    from+=5
+                    console.log(game_dict)
                 }
 
                 setInterval(function () { getTimer(from, to); }, 4500);
@@ -140,7 +140,7 @@ function GameFetch (){
     const columns = useMemo(()=> COLUMNS, [])
     const data = useMemo(()=>gamedict)
 
-    console.log(data)
+    //console.log(data)
 
     const tableInstance = useTable({
         columns,
