@@ -60,41 +60,45 @@ function GameFetch (){
             console.log(adrs_arr)
 
 
-            let from = 5
 
             if(game_tokens.length>0){
+                let from = 0
+                let to = game_tokens.length
+
                 async function getTimer(from){
+                    if(from<to){
                     
-                    await axios.all(adrs_arr.slice(from,from+5).map((adresx) => axios.get(`https://public-api.solscan.io/account/transactions?account=${adresx}`))).then(
-                        (data) => {
-                            //console.log(data);
-                            data.map((item)=>{
-                                if(item.data.length > 0){
-                                    //console.log(item.data)
-                                    let timest = item.data[item.data.length-1].blockTime;
-                                    var date = new Date(timest * 1000);
+                        await axios.all(adrs_arr.slice(from,from+5).map((adresx) => axios.get(`https://public-api.solscan.io/account/transactions?account=${adresx}`))).then(
+                            (data) => {
+                                //console.log(data);
+                                data.map((item)=>{
+                                    if(item.data.length > 0){
+                                        //console.log(item.data)
+                                        let timest = item.data[item.data.length-1].blockTime;
+                                        var date = new Date(timest * 1000);
 
-                                    var month = date.getUTCMonth();
-                                    var day = date.getUTCDay();
-                                    var year =date.getUTCFullYear();
-                                    var hours = date.getHours();
-                                    var minutes = "0" + date.getMinutes();
-                                    var seconds = "0" + date.getSeconds();
+                                        var month = date.getUTCMonth();
+                                        var day = date.getUTCDay();
+                                        var year =date.getUTCFullYear();
+                                        var hours = date.getHours();
+                                        var minutes = "0" + date.getMinutes();
+                                        var seconds = "0" + date.getSeconds();
+                                        
+                                        // Will display time in 10:30:23 format
+                                        var formattedTime =  year +"/"+ month +"/"+day +"  "+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);                                    //console.log(timest)
+                                        
+                                        time_arr.push(formattedTime)
+
+                                    }else{
+                                        time_arr.push("No time found...")
+
+                                    }
                                     
-                                    // Will display time in 10:30:23 format
-                                    var formattedTime =  year +"/"+ month +"/"+day +"  "+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);                                    //console.log(timest)
-                                    
-                                    time_arr.push(formattedTime)
-
-                                }else{
-                                    time_arr.push("No time found...")
-
-                                }
+                                })
                                 
-                            })
-                            
-                        }
-                    );
+                            }
+                        );
+                    }
 
                     for(let i=0; i<game_tokens.length;i++){
                         game_tokens[i]["Timestamp"] = time_arr[i]
@@ -104,17 +108,11 @@ function GameFetch (){
                     setGamedict(game_dict)
 
                     console.log(game_tokens)
-
+                    from+=5
                 }
 
-                let to = game_tokens.length
+                setInterval(function () { getTimer(from, to); }, 4500);
 
-                window.setInterval(function (){ 
-                    while(from < to){
-                        getTimer(from);
-                        from += 5
-                    }               
-                },6000) 
 
 
             }  
