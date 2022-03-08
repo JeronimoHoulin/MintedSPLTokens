@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
-
 const parse = require('html-react-parser');
-
-let game_tokens = [];
 
 
 function GameFetch (){
 
-    const [gamez, setGamez] = useState([]) 
-    const [adressez, setAdressez] = useState([])
     const [show, setShow] = useState(false)
-    let [table, setTable] = useState("")
-    //let [extensions, setExt] = useState("")
+
+    const [gamedict, setGamedict] = useState([]) 
+
+
 
     useEffect(() => { 
         let url ="https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json"
@@ -22,9 +19,15 @@ function GameFetch (){
             console.log(data.tokens)
             let token_list = data.tokens;
             //console.log(token_list.length);
-                                //NOW THE TOKENS ARE ALL ADED TO " tokens "
+                                  //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
             const token_300 = token_list.slice(-500);
+
+
+            let game_tokens = [];
+            let adrs_arr = []
+
+
 
             for(let i=0; i<token_300.length; i++){
 
@@ -43,176 +46,101 @@ function GameFetch (){
                         "logo": token_300[i].logoURI,
                         "Extensions":token_300[i].extensions,
                         "Category": "Game"
-                    })
+                      })
                 }
-                //////////////////////////////////////////////////
+
             }
-            //set game tokens
-            setGamez(game_tokens)    
+
+            let time_arr = []
+            //console.log(gamez)
+
+            for(let i=0; i<game_tokens.length;i++){
+                adrs_arr.push(game_tokens[i].Address)
+            }
+            console.log(adrs_arr)
 
 
+            let from = 5
 
-            //Set table
-            let _html = `<tr class="header">
-                <th style="width:10%;">Logo</th>
-                <th style="width:15%;">Symbol</th>
-                <th style="width:5%;">Name</th>
-                <th style="width:5%;">Address</th>
-                <th style="width:20%;">Tags</th>
-                <th style="width:20%;">Extensions</th>
-                <th style="width:20%;">Timestamp</th>
+            if(game_tokens.length>0){
+                async function getTimer(from){
+                    
+                    await axios.all(adrs_arr.slice(from,from+5).map((adresx) => axios.get(`https://public-api.solscan.io/account/transactions?account=${adresx}`))).then(
+                        (data) => {
+                            //console.log(data);
+                            data.map((item)=>{
+                                if(item.data.length > 0){
+                                    //console.log(item.data)
+                                    let timest = item.data[item.data.length-1].blockTime;
+                                    var date = new Date(timest * 1000);
 
-            </tr>`;
+                                    var month = date.getUTCMonth();
+                                    var day = date.getUTCDay();
+                                    var year =date.getUTCFullYear();
+                                    var hours = date.getHours();
+                                    var minutes = "0" + date.getMinutes();
+                                    var seconds = "0" + date.getSeconds();
+                                    
+                                    // Will display time in 10:30:23 format
+                                    var formattedTime =  year +"/"+ month +"/"+day +"  "+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);                                    //console.log(timest)
+                                    
+                                    time_arr.push(formattedTime)
 
-            for(let i = 0; i < game_tokens.length; i++){
+                                }else{
+                                    time_arr.push("No time found...")
 
-                [game_tokens[i].Extensions].map(links=>{
-                    var linksy = []
-
-                    if(links){
-                        //console.log(links.website)
-                        let stringit = []
-                        if (links.website) {
-                            stringit += `<a style="text-decoration: none; color:black;" 
-                            href="${links.website}">&#127760; // </a>`
-                        }if (links.discord) {
-                            stringit += `<a style="text-decoration: none; color:black;" 
-                            href="${links.discord}">&#128483; DI // </a>`
-                            
-                        }if (links.telegram) {
-                            stringit += `<a style="text-decoration: none; color:black;" 
-                            href="${links.telegram}">&#128488; TG// </a>`
-                            
-                        }if (links.youtube) {
-                            stringit += `<a style="text-decoration: none; color:black;" 
-                            href="${links.youtube}">&#127909; // </a>`
-                            
-                        }if (links.twitter) {
-                            stringit += `<a style="text-decoration: none; color:black;" 
-                            href="${links.twitter}">&#128037; // </a>`
-                            
-                        }if (links.assetContract) {
-                            stringit += `<a style="text-decoration: none; color:black;"
-                            href="${links.assetContract}">&#128196; // </a>`
-
-                        }if (links.medium) {
-                            stringit += `<a style="text-decoration: none; color:black;"
-                            href="${links.medium}"> Medium // </a>`
-
-                        }if (links.whitepaper) {
-                            stringit += `<a style="text-decoration: none; color:black;"
-                            href="${links.whitepaper}"> Whitepaper // </a>`
-
-                        }
-                        
-                        
-                        
-                        linksy.push(stringit)
-                    }
-
-                _html += `<tr>
-                            <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
-                            <td>${game_tokens[i].Symbol}</td>
-                            <td>${game_tokens[i].Name}</td>
-                            <td class = "NASHI">${game_tokens[i].Address}</td>
-                            <td>${game_tokens[i].Tags}</td>
-
-                            <td>${
-                                linksy
-                            }</td>
-                            <td>{
+                                }
                                 
-                            }</td>
-                        </tr>`;
+                            })
+                            
+                        }
+                    );
 
-                    })
+                    for(let i=0; i<game_tokens.length;i++){
+                        game_tokens[i]["Timestamp"] = time_arr[i]
+                    }
+        
+                    let game_dict = game_tokens
+                    setGamedict(game_dict)
+
+                    console.log(game_tokens)
+
+                }
+
+                let to = game_tokens.length
+
+                window.setInterval(function (){ 
+                    while(from < to){
+                        getTimer(from);
+                        from += 5
+                    }               
+                },6000) 
 
 
-            }
+            }  
 
-            setTable(_html)
-            
-            //console.log(table)
+
+
+
         })
         .catch((error) => {
-        console.error('The error is:', error);
+          console.error('The error is:', error);
         });
 
 
+
+
     }, [])
 
 
-////////////////////  GET TIMESTAMPS  //////////////////// 
-    console.log(parse(table))
-
-    let reactTable = parse(table)
-
-    //let links_arr = []
-    let adrs_arr = []
-    //let time_arr = []
     
-    const [intel, setIntel] =useState([])
-
-    useEffect(() => { 
-        reactTable.map((item)=>{
-            //console.log(item)
-            if(item.key === "0"){
-                //console.log(item)
-            }else{
-                //console.log(item.props.children[3].props.children)
-                //HERE I GET THE ADDRESSES
-                //console.log(item.props.children[6].props.children)
-                //HERE I APPEND THE TIMESTAMPS
-                adrs_arr.push(item.props.children[3].props.children)
-                //links_arr.push(`https://public-api.solscan.io/account/transactions?account=${item.props.children[3].props.children}`)
-            }
-        })
-
-        console.log(adrs_arr.length)
-
-        let intel_dict= []
-
-        axios.all(adrs_arr.slice(0,5).map((adresx) => axios.get(`https://public-api.solscan.io/account/transactions?account=${adresx}`))).then(
-            (data) => {
-                console.log(data);
-                data.map((item)=>{
-                    if(item.data.length > 0){
-                        //console.log(item.data)
-                        let timest = item.data[item.data.length-1].blockTime
-                        console.log(timest)
-                        
-                        intel_dict.push({
-                            "Address": "AN ADDRESS", //COMO ME ASEGURO QUE ESTE ADRES COINCIDE CON LA RESPUESTA DEL TIMESTAMP..?
-                            "Timestamp": timest
-                        })
-
-                    }else{
-                        intel_dict.push({
-                            "Address": "ANADRESS", 
-                            "Timestamp": "No time found..."
-                        })
-
-                    }
-                    
-                })
-                console.log(intel_dict)
-
-            }
-        );
-
-
-
-
-    }, [])
 
 
     return(
         <div className="gametable">
 
-            <h2>{`There are ${gamez.length} newly minted GAME tokens.`}</h2>
-            <button
-                onClick={() => setShow(!show)}
-            >
+            <h2>{`There are ${gamedict.length} newly minted GAME tokens.`}</h2>
+            <button onClick={() => setShow(!show)}>
                 Toggle: {show ? 'Hide' : 'Show'}
             </button>    
 
@@ -221,7 +149,7 @@ function GameFetch (){
             show && 
                 <div className = "game_table">
                     <table>
-                        {parse(table)}
+                        {JSON.stringify(gamedict)}
                     </table>
                 </div>
             
