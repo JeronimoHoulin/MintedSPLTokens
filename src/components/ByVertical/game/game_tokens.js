@@ -33,7 +33,7 @@ function GameFetch (){
             for(let i=0; i<token_300.length; i++){
 
                 //////////////////////////////////////////////////
-                const regex_game = [/utility/, /game/, /p2e/, /play/, /p2e/];
+                const regex_game = [/utili/, /game/, /p2e/, /play/, /p2e/];
                 const tags_game = token_300[i].tags;
                 //let matchin = regex_game.some(rx => rx.test(tags));
                 //console.log(matchin);
@@ -60,66 +60,78 @@ function GameFetch (){
             for(let i=0; i<game_tokens.length;i++){
                 adrs_arr.push(game_tokens[i].Address)
             }
-            console.log(adrs_arr)
+            //console.log(adrs_arr)
 
 
 
             if(game_tokens.length>0){
                 let from = 0
-                let to = game_tokens.length
+                const to = game_tokens.length
 
                 async function getTimer(from){
-                    if(from<to){
-                    
-                        await axios.all(adrs_arr.slice(from,from+5).map((adresx) => axios.get(`https://public-api.solscan.io/account/transactions?account=${adresx}`))).then(
-                            (data) => {
-                                //console.log(data);
-                                data.map((item)=>{
-                                    if(item.data.length > 0){
-                                        //console.log(item.data)
-                                        let timest = item.data[item.data.length-1].blockTime;
-                                        var date = new Date(timest * 1000);
+                    //console.log(from)
 
-                                        var month = date.getUTCMonth();
-                                        var day = date.getUTCDay();
-                                        var year =date.getUTCFullYear();
-                                        var hours = date.getHours();
-                                        var minutes = "0" + date.getMinutes();
-                                        var seconds = "0" + date.getSeconds();
-                                        
-                                        // Will display time in 10:30:23 format
-                                        var formattedTime =  year +"/"+ month +"/"+day +"  "+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);                                    //console.log(timest)
-                                        
-                                        time_arr.push(formattedTime)
+                    await axios.all(adrs_arr.slice(from,from+5).map((adresx) => axios.get(`https://public-api.solscan.io/account/transactions?account=${adresx}`))).then(
+                        (data) => {
+                            //console.log(data);
+                            data.map((item)=>{
+                                if(item.data.length > 0){
+                                    console.log(item.data)
 
-                                    }else{
-                                        time_arr.push("No time found...")
-
-                                    }
+                                    let timest = item.data[item.data.length-1].blockTime;
+                                    console.log(timest)
+                                    var date = new Date(timest * 1000);
                                     
-                                })
+                                    var month = date.getUTCMonth();
+                                    var day = date.getUTCDay();
+                                    var year =date.getUTCFullYear();
+                                    var hours = date.getHours();
+                                    var minutes = "0" + date.getMinutes();
+                                    var seconds = "0" + date.getSeconds();
+                                    
+                                    // Will display time in 10:30:23 format
+                                    var formattedTime =  year +"/"+ month +"/"+day +"  "+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);                                    //console.log(timest)
+                                    
+                                    time_arr.push(formattedTime)
+                                    //console.log(time_arr)
+
+                                }else{
+                                    time_arr.push("No time found...")
+
+                                }
                                 
-                            }
-                        );
-                    }
-                    from +=5
+                            })
+                            
+                        }
+                    );
 
-                    for(let i=0; i<game_tokens.length;i++){
-                        game_tokens[i]["Timestamp"] = time_arr[i]
+                    for(let i=0; i<time_arr.length;i++){
+                        game_tokens.slice(from,from+5)["Timestamp"] = time_arr[i]
+                        console.log(game_tokens)
+
                     }
+
         
-                    let game_dict = game_tokens
-                    setGamedict(game_dict)
-
-                    console.log(game_dict)
+                    
                 }
 
-                setInterval(function () { getTimer(from, to); }, 4500);
+                setInterval(function () { 
+                    if(from<to){
+                        from+=5
+                        getTimer(from, to); 
+                        
+                    }else{clearInterval()}
+
+                }, 6000);
+            } 
 
 
+            /*
+            let game_dict = game_tokens
+            setGamedict(game_dict)
 
-            }  
-
+            console.log(game_dict)
+            */
 
 
 
