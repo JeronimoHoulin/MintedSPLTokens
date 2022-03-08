@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
-const parse = require('html-react-parser');
+import {COLUMNS} from './game_cols'
+import {useTable} from 'react-table'
 
 
 function GameFetch (){
@@ -39,13 +40,15 @@ function GameFetch (){
             
                 if(regex_game.some(rx => rx.test(tags_game))===true){
                     game_tokens.push({
-                        "Address":token_300[i].address,
-                        "Name": token_300[i].name,
-                        "Symbol": token_300[i].symbol,
-                        "Tags": token_300[i].tags,
-                        "logo": token_300[i].logoURI,
-                        "Extensions":token_300[i].extensions,
-                        "Category": "Game"
+                        ID:i,
+                        Address:token_300[i].address,
+                        Name: token_300[i].name,
+                        Symbol: token_300[i].symbol,
+                        Tags: token_300[i].tags,
+                        logo: token_300[i].logoURI,
+                        Extensions:token_300[i].extensions,
+                        Timestamp: "Loading...",
+                        Category: "Game"
                       })
                 }
 
@@ -107,7 +110,7 @@ function GameFetch (){
                     let game_dict = game_tokens
                     setGamedict(game_dict)
 
-                    console.log(game_tokens)
+                    //console.log(game_tokens)
                     from+=5
                 }
 
@@ -132,7 +135,25 @@ function GameFetch (){
 
 
     
+    console.log(gamedict.length)
+    
+    const columns = useMemo(()=> COLUMNS, [])
+    const data = useMemo(()=>gamedict)
 
+    console.log(data)
+
+    const tableInstance = useTable({
+        columns,
+        data
+    })
+
+    const {
+        getTableProps,
+        getTbableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow
+    } = tableInstance
 
     return(
         <div className="gametable">
@@ -146,8 +167,39 @@ function GameFetch (){
 
             show && 
                 <div className = "game_table">
-                    <table>
-                        {JSON.stringify(gamedict)}
+                      {JSON.stringify(gamedict)}
+                    <table {...getTableProps()}>
+                      <thead>
+                          {
+                              headerGroups.map((headerGroup)=>(
+                                <tr {...headerGroup.getHeaderGroupProps()}>
+                                    {
+                                        headerGroup.headers.map((column) => (
+                                            <th {...column.getHeaderGroupProps()}>
+                                                {column.render('Header')}
+                                            </th>
+                                        ))}
+
+                            </tr>
+                        ))}
+                      </thead>
+
+                      <tboady {...getTbableBodyProps()}>
+                          {
+                              rows.map((row)=> {
+                                  prepareRow(row)
+                                  return (                        
+                                  <tr {...row.getRowProps}>
+                                    {
+                                      row.cells.map((cell)=>{
+                                        return <td {...cell.getCellProps}>{cell.render('cell')}</td>
+                                      })
+                                    }
+                                </tr>)
+                              })
+                          }
+
+                      </tboady>
                     </table>
                 </div>
             
