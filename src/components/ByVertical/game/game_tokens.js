@@ -1,15 +1,31 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
-import {COLUMNS} from './game_cols'
-import {useTable} from 'react-table'
+const parse = require('html-react-parser');
 
-//THIS WILL BE THE RENDERED DICT IN RETURN
+//import {COLUMNS} from './game_cols'
+//import {useTable} from 'react-table'
 
+function convertUnixTime(unix) {
+    let a = new Date(unix * 1000),
+        year = a.getFullYear(),
+        months = ['January','February','March','April','May','June','July','August','September','October','November','December'],
+        month = months[a.getMonth()],
+        date = a.getDate(),
+        hour = a.getHours(),
+        min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(),
+        sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+    return `${month} ${date}, ${year}, ${hour}:${min}:${sec}`;
+  }
+
+  
 function GameFetch (){
 
     const [show, setShow] = useState(false)
     
     const [gamedict, setGamedict] = useState([]) 
+
+    let [table, setTable] = useState("")
+
 
     let game_tokens = [];
     let adrs_arr = []
@@ -85,20 +101,121 @@ function GameFetch (){
 
                             let timest = trades[trades.length-1].blockTime
                             time_arr.push(timest)
-                            console.log(time_arr.length)
                             
                             //console.log(timest)
                             
                             //PUSH INTO GAME DICTIONARY
                             game_tokens[i]["Timestamp"] = timest
 
-                            console.log(game_tokens)
-                            setGamedict(game_tokens)
-
-
                         }else{
                             time_arr.push("No time found...")
                         }
+
+                        console.log(time_arr.length)
+                        console.log(game_tokens)
+                        setGamedict(game_tokens)
+
+                        ////////////////////////////////////////////////////////////////////////////////////// TABLE
+
+                        //Set table
+                            let _html = `<tr class="header">
+                            <th style="width:10%;">Logo</th>
+                            <th style="width:15%;">Symbol</th>
+                            <th style="width:5%;">Name</th>
+                            <th style="width:5%;">Address</th>
+                            <th style="width:20%;">Tags</th>
+                            <th style="width:20%;">Extensions</th>
+                            <th style="width:20%;">Timestamp</th>
+                            </tr>`;
+
+                            for(let i = 0; i < game_tokens.length; i++){
+                                [game_tokens[i].Extensions].map(links=>{
+                                    var linksy = []
+
+                                    if(links){
+                                        //console.log(links.website)
+                                        let stringit = []
+                                        if (links.website) {
+                                            stringit += `<a style="text-decoration: none; color:black;" 
+                                            href="${links.website}">&#127760; // </a>`
+                                        }if (links.discord) {
+                                            stringit += `<a style="text-decoration: none; color:black;" 
+                                            href="${links.discord}">&#128483; DI // </a>`
+                                            
+                                        }if (links.telegram) {
+                                            stringit += `<a style="text-decoration: none; color:black;" 
+                                            href="${links.telegram}">&#128488; TG// </a>`
+                                            
+                                        }if (links.youtube) {
+                                            stringit += `<a style="text-decoration: none; color:black;" 
+                                            href="${links.youtube}">&#127909; // </a>`
+                                            
+                                        }if (links.twitter) {
+                                            stringit += `<a style="text-decoration: none; color:black;" 
+                                            href="${links.twitter}">&#128037; // </a>`
+                                            
+                                        }if (links.assetContract) {
+                                            stringit += `<a style="text-decoration: none; color:black;"
+                                            href="${links.assetContract}">&#128196; // </a>`
+
+                                        }if (links.medium) {
+                                            stringit += `<a style="text-decoration: none; color:black;"
+                                            href="${links.medium}"> Medium // </a>`
+
+                                        }if (links.whitepaper) {
+                                            stringit += `<a style="text-decoration: none; color:black;"
+                                            href="${links.whitepaper}"> Whitepaper // </a>`
+
+                                        }
+                                        
+                                        
+                                        
+                                        linksy.push(stringit)
+                                    }
+
+                                let timestampx = null
+                                if(typeof game_tokens[i].Timestamp === 'string'){
+                                    timestampx = game_tokens[i].Timestamp
+                                }else{ timestampx =convertUnixTime(game_tokens[i].Timestamp)}
+
+                                _html += `<tr>
+                                            <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
+                                            <td>${game_tokens[i].Symbol}</td>
+                                            <td>${game_tokens[i].Name}</td>
+                                            <td>${game_tokens[i].Address}</td>
+                                            <td>${game_tokens[i].Tags}</td>
+                                            <td>${
+                                                linksy
+                                            }</td>
+                                            <td>${
+                                                timestampx
+                                            }</td>
+                                        </tr>`;
+
+                                    })
+
+
+                            }
+
+                            setTable(_html)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     })                
                 }
 
@@ -122,6 +239,7 @@ function GameFetch (){
 
 
 
+
         })
         .catch((error) => {
           console.error('The error is:', error);
@@ -138,7 +256,30 @@ function GameFetch (){
 
     return(
 
-        JSON.stringify(gamedict)
+        <div className="gametable">
+
+            <h2>{`There are ${gamedict.length} newly minted GAME tokens.`}</h2>
+            <button onClick={() => setShow(!show)}>
+                Toggle: {show ? 'Hide' : 'Show'}
+            </button>    
+
+            {
+
+            show && 
+                <div className = "game_table">
+                    
+                    { // THE TABLE
+
+                    <table>
+                        {parse(table)}
+                    </table>
+
+                    }
+                    
+                </div>
+            
+            }
+        </div>
     )
 
 }
