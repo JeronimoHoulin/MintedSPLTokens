@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
-import {COLUMNS} from './game_cols'
-import {useTable} from 'react-table'
+
 
 //THIS WILL BE THE RENDERED DICT IN RETURN
 
@@ -46,7 +45,7 @@ function GameFetch (){
                         Name: token_300[i].name,
                         Symbol: token_300[i].symbol,
                         Tags: token_300[i].tags,
-                        logo: token_300[i].logoURI,
+                        Logo: token_300[i].logoURI,
                         Extensions:token_300[i].extensions,
                         Timestamp: "Loading...",
                         Category: "Game"

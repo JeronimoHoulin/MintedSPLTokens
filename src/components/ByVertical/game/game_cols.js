@@ -20,7 +20,7 @@ export const COLUMNS = [
     },
     {
         Header: 'LOGO',
-        Accesor: 'logo'
+        Accesor: 'Logo'
     },
     {
         Header: 'EXT',

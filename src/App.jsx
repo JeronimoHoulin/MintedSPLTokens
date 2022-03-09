@@ -1,5 +1,5 @@
 import DataFetch from './components/Datafetching'
-import GameFetch from './components/ByVertical/game/game_tokens'
+import GameTable from './components/ByVertical/game/game_table'
 import DefiFetch from './components/ByVertical/defi_tokens'
 import MetaverseFetch from './components/ByVertical/metaverse_tokens'
 import MemeFetch from './components/ByVertical/meme_tokens'
@@ -15,7 +15,7 @@ function App() {
             <div className="components">
                 <DataFetch />
                 <Refresh />
-                <GameFetch />
+                <GameTable />
                 <DefiFetch />
                 <MetaverseFetch />
                 <MemeFetch />
