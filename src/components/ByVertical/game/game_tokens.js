@@ -3,13 +3,15 @@ import axios from "axios";
 import {COLUMNS} from './game_cols'
 import {useTable} from 'react-table'
 
+//THIS WILL BE THE RENDERED DICT IN RETURN
 
 function GameFetch (){
 
     const [show, setShow] = useState(false)
 
-    const [gamedict, setGamedict] = useState([]) 
-
+    //const [gamedict, setGamedict] = useState([]) 
+    let game_tokens = [];
+    let adrs_arr = []
 
 
     useEffect(() => { 
@@ -25,8 +27,6 @@ function GameFetch (){
             const token_300 = token_list.slice(-500);
 
 
-            let game_tokens = [];
-            let adrs_arr = []
 
 
 
@@ -63,66 +63,59 @@ function GameFetch (){
             //console.log(adrs_arr)
 
 
+            if(game_tokens.length != 0){
 
-            if(game_tokens.length>0){
-                let from = 0
-                const to = game_tokens.length
+                let counter = 0
 
-                async function getTimer(from){
-                    //console.log(from)
 
-                    await axios.all(adrs_arr.slice(from,from+5).map((adresx) => axios.get(`https://public-api.solscan.io/account/transactions?account=${adresx}`))).then(
-                        (data) => {
-                            //console.log(data);
-                            data.map((item)=>{
-                                if(item.data.length > 0){
-                                    console.log(item.data)
+                //STRT UP DATA COLECTING FUNCTION FOR EVERY ADDRESS IN ADR_ARR
 
-                                    let timest = item.data[item.data.length-1].blockTime;
-                                    console.log(timest)
-                                    var date = new Date(timest * 1000);
-                                    
-                                    var month = date.getUTCMonth();
-                                    var day = date.getUTCDay();
-                                    var year =date.getUTCFullYear();
-                                    var hours = date.getHours();
-                                    var minutes = "0" + date.getMinutes();
-                                    var seconds = "0" + date.getSeconds();
-                                    
-                                    // Will display time in 10:30:23 format
-                                    var formattedTime =  year +"/"+ month +"/"+day +"  "+ hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);                                    //console.log(timest)
-                                    
-                                    time_arr.push(formattedTime)
-                                    //console.log(time_arr)
 
-                                }else{
-                                    time_arr.push("No time found...")
+                function getTimer(i) {
 
-                                }
-                                
-                            })
+
+
+                    axios.get(`https://public-api.solscan.io/account/transactions?account=${adrs_arr[i]}`)
+
+                    .then((data)=>{
+                        //console.log(data);
+                        let trades = data.data;
+                        if(trades.length > 0){
+
+                            let timest = trades[trades.length-1].blockTime
+                            time_arr.push(timest)
+                            console.log(time_arr)
                             
+                            //console.log(timest)
+                            
+                            //PUSH INTO GAME DICTIONARY
+                            game_tokens[i]["Timestamp"] = timest
+
+                            //console.log(game_tokens)
+                            //Final_game_Dict.push(game_tokens)
+
+                        }else{
+                            time_arr.push("No time found...")
                         }
-                    );
-
-                    for(let i=0; i<time_arr.length;i++){
-                        game_tokens.slice(from,from+5)["Timestamp"] = time_arr[i]
-                        console.log(game_tokens)
-
-                    }
-
-        
-                    
+                    })                
                 }
 
+
+
+
+                //SET INTERVAL FUNCTION TO RUN COLECTOR
+
                 setInterval(function () { 
-                    if(from<to){
-                        from+=5
-                        getTimer(from, to); 
+                    if(counter <= adrs_arr.length){
+
+                        getTimer(counter);
+
+                        counter+=1
                         
                     }else{clearInterval()}
 
-                }, 6000);
+                }, 1000);
+
             } 
 
 
@@ -147,10 +140,10 @@ function GameFetch (){
 
 
     
-    console.log(gamedict.length)
+    console.log(game_tokens)
     
     const columns = useMemo(()=> COLUMNS, [])
-    const data = useMemo(()=>gamedict)
+    const data = useMemo(()=>game_tokens)
 
     //console.log(data)
 
@@ -170,7 +163,7 @@ function GameFetch (){
     return(
         <div className="gametable">
 
-            <h2>{`There are ${gamedict.length} newly minted GAME tokens.`}</h2>
+            <h2>{`There are ${game_tokens.length} newly minted GAME tokens.`}</h2>
             <button onClick={() => setShow(!show)}>
                 Toggle: {show ? 'Hide' : 'Show'}
             </button>    
@@ -179,7 +172,7 @@ function GameFetch (){
 
             show && 
                 <div className = "game_table">
-                      {JSON.stringify(gamedict)}
+                      {JSON.stringify(game_tokens)}
                     <table {...getTableProps()}>
                       <thead>
                           {
