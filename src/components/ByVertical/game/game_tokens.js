@@ -8,8 +8,9 @@ import {useTable} from 'react-table'
 function GameFetch (){
 
     const [show, setShow] = useState(false)
+    
+    const [gamedict, setGamedict] = useState([]) 
 
-    //const [gamedict, setGamedict] = useState([]) 
     let game_tokens = [];
     let adrs_arr = []
 
@@ -63,7 +64,7 @@ function GameFetch (){
             //console.log(adrs_arr)
 
 
-            if(game_tokens.length != 0){
+            if(game_tokens.length !== 0){
 
                 let counter = 0
 
@@ -84,15 +85,16 @@ function GameFetch (){
 
                             let timest = trades[trades.length-1].blockTime
                             time_arr.push(timest)
-                            console.log(time_arr)
+                            console.log(time_arr.length)
                             
                             //console.log(timest)
                             
                             //PUSH INTO GAME DICTIONARY
                             game_tokens[i]["Timestamp"] = timest
 
-                            //console.log(game_tokens)
-                            //Final_game_Dict.push(game_tokens)
+                            console.log(game_tokens)
+                            setGamedict(game_tokens)
+
 
                         }else{
                             time_arr.push("No time found...")
@@ -119,14 +121,6 @@ function GameFetch (){
             } 
 
 
-            /*
-            let game_dict = game_tokens
-            setGamedict(game_dict)
-
-            console.log(game_dict)
-            */
-
-
 
         })
         .catch((error) => {
@@ -139,78 +133,12 @@ function GameFetch (){
     }, [])
 
 
-    
-    console.log(game_tokens)
-    
-    const columns = useMemo(()=> COLUMNS, [])
-    const data = useMemo(()=>game_tokens)
 
-    //console.log(data)
-
-    const tableInstance = useTable({
-        columns,
-        data
-    })
-
-    const {
-        getTableProps,
-        getTbableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow
-    } = tableInstance
+    //JSON.stringify(gamedict)
 
     return(
-        <div className="gametable">
 
-            <h2>{`There are ${game_tokens.length} newly minted GAME tokens.`}</h2>
-            <button onClick={() => setShow(!show)}>
-                Toggle: {show ? 'Hide' : 'Show'}
-            </button>    
-
-            {
-
-            show && 
-                <div className = "game_table">
-                      {JSON.stringify(game_tokens)}
-                    <table {...getTableProps()}>
-                      <thead>
-                          {
-                              headerGroups.map((headerGroup)=>(
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {
-                                        headerGroup.headers.map((column) => (
-                                            <th {...column.getHeaderGroupProps()}>
-                                                {column.render('Header')}
-                                            </th>
-                                        ))}
-
-                            </tr>
-                        ))}
-                      </thead>
-
-                      <tboady {...getTbableBodyProps()}>
-                          {
-                              rows.map((row)=> {
-                                  prepareRow(row)
-                                  return (                        
-                                  <tr {...row.getRowProps}>
-                                    {
-                                      row.cells.map((cell)=>{
-                                        return <td {...cell.getCellProps}>{cell.render('cell')}</td>
-                                      })
-                                    }
-                                </tr>)
-                              })
-                          }
-
-                      </tboady>
-                    </table>
-                </div>
-            
-            }
-        </div>
-
+        JSON.stringify(gamedict)
     )
 
 }
