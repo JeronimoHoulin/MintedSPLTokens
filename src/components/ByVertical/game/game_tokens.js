@@ -55,7 +55,8 @@ function GameFetch (){
                 //let matchin = regex_game.some(rx => rx.test(tags));
                 //console.log(matchin);
             
-                if(regex_game.some(rx => rx.test(tags_game))===true){
+                if(regex_game.some(rx => rx.test(tags_game))===true && token_300[i].extensions ){
+                    
                     game_tokens.push({
                         ID:i,
                         Address:token_300[i].address,
@@ -120,12 +121,12 @@ function GameFetch (){
                         //Set table
                             let _html = `<tr class="header">
                             <th style="width:10%;">Logo</th>
-                            <th style="width:15%;">Symbol</th>
-                            <th style="width:5%;">Name</th>
-                            <th style="width:5%;">Address</th>
-                            <th style="width:20%;">Tags</th>
-                            <th style="width:20%;">Extensions</th>
-                            <th style="width:20%;">Timestamp</th>
+                            <th style="width:10%;">Symbol</th>
+                            <th style="width:10%;">Name</th>
+                            <th style="width:10%;">Address</th>
+                            <th style="width:10%;">Tags</th>
+                            <th style="width:10%;">Extensions</th>
+                            <th style="width:10%;">Timestamp</th>
                             </tr>`;
 
                             for(let i = 0; i < game_tokens.length; i++){
