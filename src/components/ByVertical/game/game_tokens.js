@@ -41,9 +41,8 @@ function GameFetch (){
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
+                                  
             const token_300 = token_list.slice(-500);
-
-
 
 
 
