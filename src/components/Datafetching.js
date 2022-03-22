@@ -38,7 +38,7 @@ function DataFetch (){
     return(
         <div>
             <h1>
-                {`There are currently ${tokens.length} SPL tokens in the Solana ecosystem. We will use the last ${tokenz.length}`}
+                {`There are currently ${tokens.length} SPL tokens in the Solana ecosystem. We will use the last ${tokenz.length}.`}
             </h1>
 
         </div>

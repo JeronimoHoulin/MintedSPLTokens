@@ -14,10 +14,10 @@ function convertUnixTime(unix) {
         hour = a.getHours(),
         min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(),
         sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-    return `${month} ${date}, ${year}, ${hour}:${min}:${sec}`;
-  }
+    return `${month} ${date}, ${year}`;
+}
 
-  
+console.log(this.props.valuex)
 function GameFetch (){
 
     const [show, setShow] = useState(false)
@@ -125,7 +125,7 @@ function GameFetch (){
                             <th style="width:10%;">Address</th>
                             <th style="width:10%;">Tags</th>
                             <th style="width:10%;">Extensions</th>
-                            <th style="width:10%;">Timestamp</th>
+                            <th style="width:10%;">Mint Date</th>
                             </tr>`;
 
                             for(let i = 0; i < game_tokens.length; i++){
@@ -233,7 +233,7 @@ function GameFetch (){
                         
                     }else{clearInterval()}
 
-                }, 1000);
+                }, 1500);
 
             } 
 
@@ -250,7 +250,7 @@ function GameFetch (){
 
     }, [])
 
-
+    
 
     //JSON.stringify(gamedict)
 
