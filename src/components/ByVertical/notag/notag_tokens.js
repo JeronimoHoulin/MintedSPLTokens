@@ -14,7 +14,7 @@ function convertUnixTime(unix) {
         hour = a.getHours(),
         min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(),
         sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-    return `${month} ${date}, ${year}, ${hour}:${min}:${sec}`;
+    return `${month} ${date}, ${year}`;
   }
 
   
@@ -42,9 +42,6 @@ function NotagFetch (){
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
             const token_300 = token_list.slice(-500);
-
-
-
 
 
             for(let i=0; i<token_300.length; i++){
@@ -107,8 +104,7 @@ function NotagFetch (){
                             time_arr.push("No time found...")
                         }
 
-                        console.log(time_arr.length)
-                        console.log(notag_tokens)
+
                         setNotagdict(notag_tokens)
 
                         ////////////////////////////////////////////////////////////////////////////////////// TABLE

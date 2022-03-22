@@ -14,7 +14,7 @@ function convertUnixTime(unix) {
         hour = a.getHours(),
         min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(),
         sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-    return `${month} ${date}, ${year}, ${hour}:${min}:${sec}`;
+    return `${month} ${date}, ${year}`;
   }
 
   
@@ -43,7 +43,7 @@ function GameFetch (){
 
                                   
             const token_300 = token_list.slice(-500);
-
+            console.log(token_300)
 
 
             for(let i=0; i<token_300.length; i++){
@@ -111,8 +111,8 @@ function GameFetch (){
                             time_arr.push("No time found...")
                         }
 
-                        console.log(time_arr.length)
-                        console.log(game_tokens)
+                        //console.log(time_arr.length)
+                        //console.log(game_tokens)
                         setGamedict(game_tokens)
 
                         ////////////////////////////////////////////////////////////////////////////////////// TABLE

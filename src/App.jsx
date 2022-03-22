@@ -10,7 +10,7 @@ function App() {
 
     return (
         <div className='App'>
-            <h1>Solana Prime Newly Minted!</h1>
+            <h1>SolanaPrime SPL Token Tracker!</h1>
             
             <div className="components">
                 <DataFetch />

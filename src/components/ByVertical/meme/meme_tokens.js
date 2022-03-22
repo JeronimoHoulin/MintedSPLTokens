@@ -14,7 +14,7 @@ function convertUnixTime(unix) {
         hour = a.getHours(),
         min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(),
         sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-    return `${month} ${date}, ${year}, ${hour}:${min}:${sec}`;
+    return `${month} ${date}, ${year}`;
   }
 
   
@@ -112,8 +112,7 @@ function MemeFetch (){
                             time_arr.push("No time found...")
                         }
 
-                        console.log(time_arr.length)
-                        console.log(meme_tokens)
+
                         setMemedict(meme_tokens)
 
                         ////////////////////////////////////////////////////////////////////////////////////// TABLE

@@ -14,7 +14,7 @@ function convertUnixTime(unix) {
         hour = a.getHours(),
         min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(),
         sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-    return `${month} ${date}, ${year}, ${hour}:${min}:${sec}`;
+    return `${month} ${date}, ${year}`;
   }
 
   
@@ -36,7 +36,7 @@ function DefiFetch (){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data.tokens)
+            //console.log(data.tokens)
             let token_list = data.tokens;
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
@@ -112,8 +112,8 @@ function DefiFetch (){
                             time_arr.push("No time found...")
                         }
 
-                        console.log(time_arr.length)
-                        console.log(defi_tokens)
+                        //console.log(time_arr.length)
+                        //console.log(defi_tokens)
                         setDefidict(defi_tokens)
 
                         ////////////////////////////////////////////////////////////////////////////////////// TABLE
