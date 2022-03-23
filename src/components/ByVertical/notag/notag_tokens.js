@@ -41,13 +41,13 @@ function NotagFetch (){
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
-            const token_300 = token_list.slice(-500);
+            const token_300 = token_list.slice(-800);
 
 
             for(let i=0; i<token_300.length; i++){
 
                 //////////////////////////////////////////////////
-                if(token_300[i]['tags'] == null){
+                if(token_300[i]['tags'] == null && token_300[i].extensions){
                     
                     notag_tokens.push({
                         ID:i,
