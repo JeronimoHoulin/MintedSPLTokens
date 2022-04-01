@@ -38,8 +38,23 @@ function DataFetch (){
     return(
         <div>
             <h1>
-                {`There are currently ${tokens.length} SPL tokens in the Solana ecosystem. We will use the last ${tokenz.length}.`}
+                {`There are currently ${tokens.length} SPL tokens in the Solana ecosystem.`}
             </h1>
+
+            <p1>Set your range:  </p1>
+
+            <input
+                type="number"
+                min={0}
+                max={tokens.length}
+                step={1}
+                value={num}
+                onChange={e => setNum(e.target.value)}
+            />
+
+            <h2>
+                {`We will use the last ${num}.`}
+            </h2>
 
         </div>
     )
