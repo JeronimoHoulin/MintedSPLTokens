@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
 const parse = require('html-react-parser');
 
-//import {COLUMNS} from './game_cols'
+//import {COLUMNS} from './meta_cols'
 //import {useTable} from 'react-table'
 
 function convertUnixTime(unix) {
@@ -18,16 +18,16 @@ function convertUnixTime(unix) {
   }
 
   
-function GameFetch (){
+function MetaFetch (){
 
     const [show, setShow] = useState(false)
     
-    const [gamedict, setGamedict] = useState([]) 
+    const [metadict, setMetadict] = useState([]) 
 
     let [table, setTable] = useState("")
 
 
-    let game_tokens = [];
+    let meta_tokens = [];
     let adrs_arr = []
 
 
@@ -41,46 +41,47 @@ function GameFetch (){
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
-                                  
             const token_300 = token_list.slice(-800);
-            console.log(token_300)
+
+
+
 
 
             for(let i=0; i<token_300.length; i++){
 
                 //////////////////////////////////////////////////
-                const regex_game = [/utili/, /game/, /p2e/, /play/, /p2e/];
-                const tags_game = token_300[i].tags;
-                //let matchin = regex_game.some(rx => rx.test(tags));
+                const regex_meta = [/meta/, /metaverse/, /verse/, /vr/];
+                const tags_meta = token_300[i].tags;
+                //let matchin = regex_meta.some(rx => rx.test(tags));
                 //console.log(matchin);
             
-                if(regex_game.some(rx => rx.test(tags_game))===true && token_300[i].extensions){
+                if(regex_meta.some(rx => rx.test(tags_meta))===true && token_300[i].extensions ){
                     
-                    game_tokens.push({
+                    meta_tokens.push({
                         ID:i,
                         Address:token_300[i].address,
                         Name: token_300[i].name,
                         Symbol: token_300[i].symbol,
                         Tags: token_300[i].tags,
-                        Logo: token_300[i].logoURI,
+                        logo: token_300[i].logoURI,
                         Extensions:token_300[i].extensions,
                         Timestamp: "Loading...",
-                        Category: "Game"
+                        Category: "Meta"
                       })
                 }
 
             }
 
             let time_arr = []
-            //console.log(gamez)
+            //console.log(metaz)
 
-            for(let i=0; i<game_tokens.length;i++){
-                adrs_arr.push(game_tokens[i].Address)
+            for(let i=0; i<meta_tokens.length;i++){
+                adrs_arr.push(meta_tokens[i].Address)
             }
             //console.log(adrs_arr)
 
 
-            if(game_tokens.length !== 0){
+            if(meta_tokens.length !== 0){
 
                 let counter = 0
 
@@ -104,16 +105,15 @@ function GameFetch (){
                             
                             //console.log(timest)
                             
-                            //PUSH INTO GAME DICTIONARY
-                            game_tokens[i]["Timestamp"] = timest
+                            //PUSH INTO META DICTIONARY
+                            meta_tokens[i]["Timestamp"] = timest
 
                         }else{
                             time_arr.push("No time found...")
                         }
 
-                        //console.log(time_arr.length)
-                        //console.log(game_tokens)
-                        setGamedict(game_tokens)
+
+                        setMetadict(meta_tokens)
 
                         ////////////////////////////////////////////////////////////////////////////////////// TABLE
 
@@ -128,8 +128,8 @@ function GameFetch (){
                             <th style="width:10%;">Timestamp</th>
                             </tr>`;
 
-                            for(let i = 0; i < game_tokens.length; i++){
-                                [game_tokens[i].Extensions].map(links=>{
+                            for(let i = 0; i < meta_tokens.length; i++){
+                                [meta_tokens[i].Extensions].map(links=>{
                                     var linksy = []
 
                                     if(links){
@@ -174,16 +174,16 @@ function GameFetch (){
                                     }
 
                                 let timestampx = null
-                                if(typeof game_tokens[i].Timestamp === 'string'){
-                                    timestampx = game_tokens[i].Timestamp
-                                }else{ timestampx =convertUnixTime(game_tokens[i].Timestamp)}
+                                if(typeof meta_tokens[i].Timestamp === 'string'){
+                                    timestampx = meta_tokens[i].Timestamp
+                                }else{ timestampx =convertUnixTime(meta_tokens[i].Timestamp)}
 
                                 _html += `<tr>
-                                            <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
-                                            <td>${game_tokens[i].Symbol}</td>
-                                            <td>${game_tokens[i].Name}</td>
-                                            <td>${game_tokens[i].Address}</td>
-                                            <td>${game_tokens[i].Tags}</td>
+                                            <td><img src="${meta_tokens[i].logo}" width="34" height="35"/></td>
+                                            <td>${meta_tokens[i].Symbol}</td>
+                                            <td>${meta_tokens[i].Name}</td>
+                                            <td>${meta_tokens[i].Address}</td>
+                                            <td>${meta_tokens[i].Tags}</td>
                                             <td>${
                                                 linksy
                                             }</td>
@@ -252,13 +252,13 @@ function GameFetch (){
 
 
 
-    //JSON.stringify(gamedict)
+    //JSON.stringify(metadict)
 
     return(
 
-        <div className="gametable">
+        <div className="metatable">
 
-            <h2>{`There are ${gamedict.length} newly minted GAME tokens.`}</h2>
+            <h2>{`There are ${metadict.length} newly minted META tokens.`}</h2>
             <button onClick={() => setShow(!show)}>
                 Toggle: {show ? 'Hide' : 'Show'}
             </button>    
@@ -266,7 +266,7 @@ function GameFetch (){
             {
 
             show && 
-                <div className = "game_table">
+                <div className = "meta_table">
                     
                     { // THE TABLE
 
@@ -284,4 +284,4 @@ function GameFetch (){
 
 }
 
-export default GameFetch
+export default MetaFetch

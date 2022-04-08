@@ -19,7 +19,7 @@ function DataFetch (){
             setTokens(token_list);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
-            const token_300 = token_list.slice(-500);
+            const token_300 = token_list.slice(-800);
 
             setTokenz(token_300)
 
@@ -38,7 +38,7 @@ function DataFetch (){
     return(
         <div>
             <h1>
-                {`There are currently ${tokens.length} SPL tokens in the Solana ecosystem. We will use the last ${tokenz.length}`}
+                {`There are currently ${tokens.length} SPL tokens in the Solana ecosystem. We will use the last ${tokenz.length}.`}
             </h1>
 
         </div>
