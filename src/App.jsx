@@ -15,7 +15,7 @@ function App() {
             <div className="components">
                 <DataFetch />
                 <Refresh />
-                <GameTable />
+                <GameFetch />
                 <DefiFetch />
                 <MetaverseFetch />
                 <MemeFetch />
