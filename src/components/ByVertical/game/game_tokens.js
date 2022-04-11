@@ -62,7 +62,7 @@ function GameFetch (){
                         Name: token_300[i].name,
                         Symbol: token_300[i].symbol,
                         Tags: token_300[i].tags,
-                        Logo: token_300[i].logoURI,
+                        logo: token_300[i].logoURI,
                         Extensions:token_300[i].extensions,
                         Timestamp: "Loading...",
                         Category: "Game"
