@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
+import firebase from '../../../firebase'
+import { QuerySnapshot } from '@firebase/firestore';
+
 const parse = require('html-react-parser');
 
 //import {COLUMNS} from './game_cols'
@@ -21,10 +24,44 @@ function convertUnixTime(unix) {
 function GameFetch (){
 
     const [show, setShow] = useState(false)
-    
     const [gamedict, setGamedict] = useState([]) 
-
     let [table, setTable] = useState("")
+    
+    const [gameslisted, setGameslisted] = useState([])
+    const [loading, setLoading] = useState(false) 
+
+
+    const ref = firebase.firestore().collection("gametokens")
+
+    //console.log(ref)
+
+    function getGameslisted() {
+        setLoading(true);
+        ref.onSnapshot((querySnapshot)=>{
+            const gameslistedx = []
+            querySnapshot.forEach((doc) => {
+                gameslistedx.push(doc.data());
+            });
+            setGameslisted(gameslistedx);
+            setLoading(false);
+        });
+
+    }
+
+    useEffect(()=>{
+        getGameslisted();
+    }, []);
+
+    if(loading == false){
+        console.log(gameslisted)
+    }else{console.log("Loading the checklist DB!")}
+
+
+
+
+
+
+
 
 
     let game_tokens = [];
