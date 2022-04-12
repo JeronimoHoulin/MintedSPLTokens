@@ -1,8 +1,15 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
 import "./game.css";
+import { type } from '@testing-library/user-event/dist/type';
+
+const parse = require('html-react-parser');
+
 
 function convertUnixTime(unix) {
+    if(typeof unix === 'string'){
+        return("Loading...")
+    }
     let a = new Date(unix * 1000),
         year = a.getFullYear(),
         months = ['January','February','March','April','May','June','July','August','September','October','November','December'],
@@ -81,9 +88,7 @@ function GameFetch (){
                 //STRT UP DATA COLECTING FUNCTION FOR EVERY ADDRESS IN ADR_ARR
 
 
-                function getTimer(i) {
-
-
+                function getTimer(i){
 
                     axios.get(`https://public-api.solscan.io/account/transactions?account=${adrs_arr[i]}`)
 
@@ -253,19 +258,21 @@ function GameFetch (){
                             <th>Timestamp</th>
                             <th>Viewed</th>
                         </tr>
+
                         {gamedict.map(function(item, i){
-                            return(
-                                `<td><img src="${item.logo}" width="34" height="35"/></td>
-                                <td>${item.Symbol}</td>
-                                <td>${item.Name}</td>
-                                <td>${item.Address}</td>
-                                <td>${item.Tags}</td>`
+                            return(parse(
+                                `<tr>
+                                    <td><img src="${item.logo}" width="34" height="35"/></td>
+                                    <td>${item.Symbol}</td>
+                                    <td>${item.Name}</td>
+                                    <td>${item.Address}</td>
+                                    <td>${item.Tags}</td>
+                                    <td>${item.Extensions}</td>
+                                    <td>${convertUnixTime(item.Timestamp)}</td>
+                                </tr>`)
                             )
                         })}
-                        <tr>
-                            
-                        </tr>
-                        
+                                                
                     </table>
                     
                 </div>
