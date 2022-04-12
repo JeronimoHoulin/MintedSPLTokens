@@ -147,6 +147,7 @@ function GameFetch (){
     //JSON.stringify(gamedict)
     console.log(gamedict)
 
+
     return(
 
         <div className="gametable">
@@ -161,25 +162,23 @@ function GameFetch (){
             show && 
                 <div className = "game_table">
                     
-                    { // THE TABLE
-
                     <table>
-                        {
-                        `<tr class="header">
-                            <th style="width:10%;">Logo</th>
-                            <th style="width:10%;">Symbol</th>
-                            <th style="width:10%;">Name</th>
-                            <th style="width:10%;">Address</th>
-                            <th style="width:10%;">Tags</th>
-                            <th style="width:10%;">Extensions</th>
-                            <th style="width:10%;">Timestamp</th>
-                            <th style="width:10%;">Viewed</th>
-                            </tr>`
+                        <tr class="header">
+                            <th>Logo</th>
+                            <th>Symbol</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Tags</th>
+                            <th>Extensions</th>
+                            <th>Timestamp</th>
+                            <th>Viewed</th>
+                        </tr>
 
-                        }
+                        <tr>
+                            
+                        </tr>
+                        
                     </table>
-
-                    }
                     
                 </div>
             
