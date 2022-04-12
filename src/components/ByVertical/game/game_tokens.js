@@ -1,12 +1,20 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
+import "./game.css";
 
-const parse = require('html-react-parser');
+function convertUnixTime(unix) {
+    let a = new Date(unix * 1000),
+        year = a.getFullYear(),
+        months = ['January','February','March','April','May','June','July','August','September','October','November','December'],
+        month = months[a.getMonth()],
+        date = a.getDate(),
+        hour = a.getHours(),
+        min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(),
+        sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+    return `${month} ${date}, ${year}`;
+  }
 
-//import {COLUMNS} from './game_cols'
-//import {useTable} from 'react-table'
-
-
+  
 function GameFetch (){
 
     const [show, setShow] = useState(false)
@@ -120,7 +128,7 @@ function GameFetch (){
                         
                     }else{clearInterval()}
 
-                }, 3000);
+                }, 1500);
             } 
 
 
@@ -138,6 +146,7 @@ function GameFetch (){
 
     //JSON.stringify(gamedict)
     console.log(gamedict)
+
     return(
 
         <div className="gametable">
@@ -155,7 +164,12 @@ function GameFetch (){
                     { // THE TABLE
 
                     <table>
-                        {"hey game dict"}
+                        {
+
+                            
+
+
+                        }
                     </table>
 
                     }
