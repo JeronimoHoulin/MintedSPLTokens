@@ -148,6 +148,86 @@ function GameFetch (){
     console.log(gamedict)
 
 
+/*
+    for(let i = 0; i < game_tokens.length; i++){
+        [game_tokens[i].Extensions].map(links=>{
+            var linksy = []
+
+            if(links){
+                //console.log(links.website)
+                let stringit = []
+                if (links.website) {
+                    stringit += `<a style="text-decoration: none; color:black;" 
+                    href="${links.website}">&#127760; // </a>`
+                }if (links.discord) {
+                    stringit += `<a style="text-decoration: none; color:black;" 
+                    href="${links.discord}">&#128483; DI // </a>`
+                    
+                }if (links.telegram) {
+                    stringit += `<a style="text-decoration: none; color:black;" 
+                    href="${links.telegram}">&#128488; TG// </a>`
+                    
+                }if (links.youtube) {
+                    stringit += `<a style="text-decoration: none; color:black;" 
+                    href="${links.youtube}">&#127909; // </a>`
+                    
+                }if (links.twitter) {
+                    stringit += `<a style="text-decoration: none; color:black;" 
+                    href="${links.twitter}">&#128037; // </a>`
+                    
+                }if (links.assetContract) {
+                    stringit += `<a style="text-decoration: none; color:black;"
+                    href="${links.assetContract}">&#128196; // </a>`
+
+                }if (links.medium) {
+                    stringit += `<a style="text-decoration: none; color:black;"
+                    href="${links.medium}"> Medium // </a>`
+
+                }if (links.whitepaper) {
+                    stringit += `<a style="text-decoration: none; color:black;"
+                    href="${links.whitepaper}"> Whitepaper // </a>`
+
+                }
+                
+                
+                
+                linksy.push(stringit)
+            }
+
+        let timestampx = null
+        if(typeof game_tokens[i].Timestamp === 'string'){
+            timestampx = game_tokens[i].Timestamp
+        }else{ timestampx =convertUnixTime(game_tokens[i].Timestamp)}
+
+        _html += `<tr>
+                    <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
+                    <td>${game_tokens[i].Symbol}</td>
+                    <td>${game_tokens[i].Name}</td>
+                    <td>${game_tokens[i].Address}</td>
+                    <td>${game_tokens[i].Tags}</td>
+                    <td>${
+                        linksy
+                    }</td>
+                    <td>${
+                        timestampx
+                    }</td>
+                    <td style="text-align:center">
+                    <label class="switch">
+                        <input type="checkbox" focus 
+                            name=${game_tokens[i].Address} 
+                            value=${game_tokens[i].Address}  
+                            onChange={${handleChange()}}>
+                        <span class="slider round"></span>
+                    </label>
+                </td>
+                </tr>`;
+
+            })
+
+
+    }
+*/
+
     return(
 
         <div className="gametable">
@@ -173,7 +253,15 @@ function GameFetch (){
                             <th>Timestamp</th>
                             <th>Viewed</th>
                         </tr>
-
+                        {gamedict.map(function(item, i){
+                            return(
+                                `<td><img src="${item.logo}" width="34" height="35"/></td>
+                                <td>${item.Symbol}</td>
+                                <td>${item.Name}</td>
+                                <td>${item.Address}</td>
+                                <td>${item.Tags}</td>`
+                            )
+                        })}
                         <tr>
                             
                         </tr>
