@@ -30,6 +30,9 @@ function GameFetch (){
     const [gameslisted, setGameslisted] = useState([])
     const [loading, setLoading] = useState(false) 
 
+    const [gamestolist, setGamestolist] = useState([])
+
+
 
     const ref = firebase.firestore().collection("gametokens")
 
@@ -53,13 +56,46 @@ function GameFetch (){
     }, []);
 
     if(loading == false){
-        console.log(gameslisted)
+        //console.log(gameslisted)
     }else{console.log("Loading the checklist DB!")}
 
 
     //console.log(gameslisted)
 
 
+    function handleEvent(drs){
+        setGamestolist(drs)
+    }
+    /*
+    const [checked, setChecked] = useState({
+        addresses: [],
+      });
+      
+      const handleChange = (e) => {
+        e.preventdefault();
+        // Destructuring
+        const { value, checked } = e.target;
+        const { addresses } = checked;
+          
+        console.log(`${value} is ${checked}`);
+         
+        // Case 1 : The user checks the box
+        if (checked) {
+            setChecked({
+                addresses: [...addresses, value],
+          });
+        }
+      
+        // Case 2  : The user unchecks the box
+        else {
+            setChecked({
+                addresses: addresses.filter((e) => e !== value),
+          });
+        }
+        console.log(checked)
+      };
+
+      */
 
 
 
@@ -232,7 +268,10 @@ function GameFetch (){
                                             }</td>
                                             <td style="text-align:center">
                                             <label class="switch">
-                                                <input type="checkbox" focus>
+                                                <input type="checkbox" focus 
+                                                    name=${game_tokens[i].Address} 
+                                                    value=${game_tokens[i].Address}  
+                                                    onChange=${handleEvent()}>
                                                 <span class="slider round"></span>
                                             </label>
                                         </td>
