@@ -165,9 +165,16 @@ function GameFetch (){
 
                     <table>
                         {
-
-                            
-
+                        `<tr class="header">
+                            <th style="width:10%;">Logo</th>
+                            <th style="width:10%;">Symbol</th>
+                            <th style="width:10%;">Name</th>
+                            <th style="width:10%;">Address</th>
+                            <th style="width:10%;">Tags</th>
+                            <th style="width:10%;">Extensions</th>
+                            <th style="width:10%;">Timestamp</th>
+                            <th style="width:10%;">Viewed</th>
+                            </tr>`
 
                         }
                     </table>
