@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
 import firebase from '../../../firebase'
-import { QuerySnapshot } from '@firebase/firestore';
+import "./game.css";
 
 const parse = require('html-react-parser');
 
@@ -57,6 +57,7 @@ function GameFetch (){
     }else{console.log("Loading the checklist DB!")}
 
 
+    //console.log(gameslisted)
 
 
 
@@ -163,6 +164,8 @@ function GameFetch (){
                             <th style="width:10%;">Tags</th>
                             <th style="width:10%;">Extensions</th>
                             <th style="width:10%;">Timestamp</th>
+                            <th style="width:10%;">Viewed</th>
+
                             </tr>`;
 
                             for(let i = 0; i < game_tokens.length; i++){
@@ -227,6 +230,12 @@ function GameFetch (){
                                             <td>${
                                                 timestampx
                                             }</td>
+                                            <td style="text-align:center">
+                                            <label class="switch">
+                                                <input type="checkbox" focus>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
                                         </tr>`;
 
                                     })
@@ -234,7 +243,7 @@ function GameFetch (){
 
                             }
 
-                            setTable(_html)
+                        setTable(_html)
 
 
 
