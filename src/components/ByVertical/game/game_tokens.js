@@ -63,9 +63,18 @@ function GameFetch (){
     //console.log(gameslisted)
 
 
-    function handleEvent(drs){
-        setGamestolist(drs)
+    function handleEvent(adrs){
+        setGamestolist(adrs)
     }
+
+    function handleChange() {
+
+        console.log('The checkbox was toggled');
+
+    } 
+
+    console.log(gamestolist)
+    
     /*
     const [checked, setChecked] = useState({
         addresses: [],
@@ -271,7 +280,7 @@ function GameFetch (){
                                                 <input type="checkbox" focus 
                                                     name=${game_tokens[i].Address} 
                                                     value=${game_tokens[i].Address}  
-                                                    onChange=${handleEvent()}>
+                                                    onChange={${handleChange()}}>
                                                 <span class="slider round"></span>
                                             </label>
                                         </td>
