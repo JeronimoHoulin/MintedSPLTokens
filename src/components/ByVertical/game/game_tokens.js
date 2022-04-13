@@ -183,6 +183,8 @@ function GameFetch (){
 
                         //console.log(time_arr.length)
                         //console.log(game_tokens)
+                        setGamedict(game_tokens)
+                        //console.log(gamedict)
 
                         ////////////////////////////////////////////////////////////////////////////////////// TABLE
 
@@ -246,14 +248,12 @@ function GameFetch (){
                         game_tokens[i].Timestamp = convertUnixTime(game_tokens[i].Timestamp)
                     }
         
-                    setGamedict(game_tokens)
-                    //console.log(gamedict)
-        
         
                 })}
 
 
-
+                setGamedict(game_tokens)
+                //console.log(gamedict)
 
                 //SET INTERVAL FUNCTION TO RUN COLECTOR
 
@@ -324,8 +324,7 @@ function GameFetch (){
                                 <td>{parse(`${item.Linkks}`)}</td>
                                 <td>{item.Timestamp}</td>
                                 <td>
-                                    <input value={item.Address} id="1" type="checkbox" onChange={handleCheck} />
-                                    <label for = "1" className={isChecked(item.Address)}>{item.Symbol}</label>
+                                    <input class="toggle" value={item.Address} id="1" type="checkbox" onChange={handleCheck} />
                                 </td>
                             </tr>
                         ))}
