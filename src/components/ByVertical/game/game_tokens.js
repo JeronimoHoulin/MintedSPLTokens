@@ -45,6 +45,7 @@ function GameFetch (){
         updatedList.splice(checked.indexOf(event.target.value), 1);
         }
         setChecked(updatedList);
+        console.log(checked)
     };
 
     // Generate string of checked items
@@ -247,7 +248,7 @@ function GameFetch (){
 
 
     //JSON.stringify(gamedict)
-    console.log(gamedict)
+    //console.log(gamedict)
 
 
     return(
@@ -288,8 +289,8 @@ function GameFetch (){
                                 <td>{parse(`${item.Linkks}`)}</td>
                                 <td>{item.Timestamp}</td>
                                 <td>
-                                    <input value={item.Address} type="checkbox" onChange={handleCheck} />
-                                    <span className={isChecked(item.Address)}>{item.Symbol}</span>
+                                    <input value={item.Address} id="1" type="checkbox" onChange={handleCheck} />
+                                    <label for = "1" className={isChecked(item.Address)}>{item.Symbol}</label>
                                 </td>
                             </tr>
                         ))}
