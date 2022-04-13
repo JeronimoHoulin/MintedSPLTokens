@@ -34,6 +34,38 @@ function GameFetch (){
 
     const [checked, setChecked] = useState([]);
 
+    const [gameslisted, setGameslisted] = useState([])
+
+
+
+
+    const ref = firebase.firestore().collection("gametokens")
+
+    //console.log(ref)
+
+    function getGameslisted() {
+        setLoading(true);
+        ref.onSnapshot((querySnapshot)=>{
+            const gameslistedx = []
+            querySnapshot.forEach((doc) => {
+                gameslistedx.push(doc.data());
+            });
+            setGameslisted(gameslistedx);
+            setLoading(false);
+        });
+
+    }
+
+    useEffect(()=>{
+        getGameslisted();
+    }, []);
+
+    if(loading == false){
+        //console.log(gameslisted)
+    }else{console.log("Loading the checklist DB!")}
+
+
+
 
 
 
