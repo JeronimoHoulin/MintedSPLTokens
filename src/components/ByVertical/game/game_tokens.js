@@ -26,29 +26,38 @@ function GameFetch (){
 
     const [show, setShow] = useState(false)
     const [gamedict, setGamedict] = useState([]) 
+
+
+    const [linksy, setLinksy] = useState([]) 
+    const [timestampy, setTimestampy] = useState([]) 
+
+
     const [checked, setChecked] = useState([]);
 
-// Add/Remove checked item from list
-const handleCheck = (event) => {
-    var updatedList = [...checked];
-    if (event.target.checked) {
-      updatedList = [...checked, event.target.value];
-    } else {
-      updatedList.splice(checked.indexOf(event.target.value), 1);
-    }
-    setChecked(updatedList);
-  };
 
-  // Generate string of checked items
-  const checkedItems = checked.length
-    ? checked.reduce((total, item) => {
-        return total + ", " + item;
-      })
-    : "";
 
-  // Return classes based on whether item is checked
-  var isChecked = (item) =>
-    checked.includes(item) ? "checked-item" : "not-checked-item";
+
+    // Add/Remove checked item from list
+    const handleCheck = (event) => {
+        var updatedList = [...checked];
+        if (event.target.checked) {
+        updatedList = [...checked, event.target.value];
+        } else {
+        updatedList.splice(checked.indexOf(event.target.value), 1);
+        }
+        setChecked(updatedList);
+    };
+
+    // Generate string of checked items
+    const checkedItems = checked.length
+        ? checked.reduce((total, item) => {
+            return total + ", " + item;
+        })
+        : "";
+
+    // Return classes based on whether item is checked
+    var isChecked = (item) =>
+        checked.includes(item) ? "checked-item" : "not-checked-item";
 
 
 
@@ -178,13 +187,14 @@ const handleCheck = (event) => {
 
 
     //JSON.stringify(gamedict)
-    console.log(gamedict)
+    //console.log(gamedict)
 
 
-/*
+    useEffect(() => { 
+
     for(let i = 0; i < game_tokens.length; i++){
         [game_tokens[i].Extensions].map(links=>{
-            var linksy = []
+            var linksyx = []
 
             if(links){
                 //console.log(links.website)
@@ -224,14 +234,18 @@ const handleCheck = (event) => {
                 
                 
                 
-                linksy.push(stringit)
+                linksyx.push(stringit)
+                setLinksy(linksyx)
             }
 
         let timestampx = null
         if(typeof game_tokens[i].Timestamp === 'string'){
             timestampx = game_tokens[i].Timestamp
-        }else{ timestampx =convertUnixTime(game_tokens[i].Timestamp)}
-
+        }else{ 
+            timestampx = convertUnixTime(game_tokens[i].Timestamp)
+            setTimestampy(timestampx)
+        }
+        /*
         _html += `<tr>
                     <td><img src="${game_tokens[i].logo}" width="34" height="35"/></td>
                     <td>${game_tokens[i].Symbol}</td>
@@ -255,11 +269,16 @@ const handleCheck = (event) => {
                 </td>
                 </tr>`;
 
+                            */
+
+
             })
 
-
     }
-*/
+
+    },[])
+
+
 
     return(
 
@@ -296,8 +315,9 @@ const handleCheck = (event) => {
                                 <td>{item.Name}</td>
                                 <td>{item.Address}</td>
                                 <td>{item.Tags}</td>
-                                <td style="text-align:center">
-                                    <label class="switch"></label>
+                                <td>{linksy}</td>
+                                <td>{timestampy}</td>
+                                <td>
                                     <input value={item.Address} type="checkbox" onChange={handleCheck} />
                                     <span className={isChecked(item.Address)}>{item.Symbol}</span>
                                 </td>
