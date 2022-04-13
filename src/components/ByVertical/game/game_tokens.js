@@ -297,6 +297,7 @@ const handleCheck = (event) => {
                                 <td>{item.Address}</td>
                                 <td>{item.Tags}</td>
                                 <td style="text-align:center">
+                                    <label class="switch"></label>
                                     <input value={item.Address} type="checkbox" onChange={handleCheck} />
                                     <span className={isChecked(item.Address)}>{item.Symbol}</span>
                                 </td>
