@@ -34,6 +34,7 @@ function GameFetch (){
 
     const [checked, setChecked] = useState([]);
 
+    const [loading, setLoading] = useState(false)
     const [gameslisted, setGameslisted] = useState([])
 
 
@@ -61,7 +62,7 @@ function GameFetch (){
     }, []);
 
     if(loading == false){
-        //console.log(gameslisted)
+        console.log(gameslisted)
     }else{console.log("Loading the checklist DB!")}
 
 
@@ -246,7 +247,7 @@ function GameFetch (){
                     }
         
                     setGamedict(game_tokens)
-                    console.log(gamedict)
+                    //console.log(gamedict)
         
         
                 })}
