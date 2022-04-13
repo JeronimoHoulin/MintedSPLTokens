@@ -296,8 +296,10 @@ const handleCheck = (event) => {
                                 <td>{item.Name}</td>
                                 <td>{item.Address}</td>
                                 <td>{item.Tags}</td>
-                                <input value={item.Address} type="checkbox" onChange={handleCheck} />
-                                <span className={isChecked(item.Address)}>{item.Symbol}</span>
+                                <td style="text-align:center">
+                                    <input value={item.Address} type="checkbox" onChange={handleCheck} />
+                                    <span className={isChecked(item.Address)}>{item.Symbol}</span>
+                                </td>
                             </tr>
                         ))}
 
