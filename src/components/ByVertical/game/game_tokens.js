@@ -44,9 +44,10 @@ function GameFetch (){
         } else {
         updatedList.splice(checked.indexOf(event.target.value), 1);
         }
+        console.log(updatedList)
         setChecked(updatedList);
-        console.log(checked)
     };
+
 
     // Generate string of checked items
     const checkedItems = checked.length
