@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
 import "./game.css";
+import firebase from '../../../firebase'
 
 const parse = require('html-react-parser');
 
