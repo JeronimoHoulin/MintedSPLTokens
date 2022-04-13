@@ -16,10 +16,6 @@ function App() {
                 <DataFetch />
                 <Refresh />
                 <GameFetch />
-                <DefiFetch />
-                <MetaverseFetch />
-                <MemeFetch />
-                <NotagFetch />
             </div>
         </div>
         )

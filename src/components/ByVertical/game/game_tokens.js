@@ -175,7 +175,7 @@ function GameFetch (){
                             //console.log(timest)
                             
                             //PUSH INTO GAME DICTIONARY
-                            game_tokens[i]["Timestamp"] = timest
+                            game_tokens[i]["Timestamp"] = convertUnixTime(timest)
 
                         }else{
                             game_tokens[i]["Timestamp"] = "No time found..."
@@ -242,11 +242,7 @@ function GameFetch (){
 
 
         
-                    if(typeof game_tokens[i].Timestamp === 'string'){
-                        game_tokens[i].Timestamp = "Loading..."
-                    }else{ 
-                        game_tokens[i].Timestamp = convertUnixTime(game_tokens[i].Timestamp)
-                    }
+
         
         
                 })}
