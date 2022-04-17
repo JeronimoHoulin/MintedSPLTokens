@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
 import "./game.css";
+
 import firebase from '../../../firebase'
+
+import { doc, setDoc } from "firebase/firestore"; 
+
 
 const parse = require('html-react-parser');
 
@@ -41,9 +45,7 @@ function GameFetch (){
 
 
     const ref = firebase.firestore().collection("gametokens")
-
     //console.log(ref)
-
     function getGameslisted() {
         setLoading(true);
         ref.onSnapshot((querySnapshot)=>{
@@ -78,7 +80,7 @@ function GameFetch (){
         } else {
         updatedList.splice(checked.indexOf(event.target.value), 1);
         }
-        console.log(updatedList)
+        console.log(updatedList);
         setChecked(updatedList);
     };
 
