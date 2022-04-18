@@ -2,9 +2,8 @@ import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
 import "./game.css";
 
-import firebase from '../../../firebase'
-
-import { doc, setDoc } from "firebase/firestore"; 
+import {db} from '../../../firebase'
+import { collection, doc, getDocs, setDoc } from "firebase/firestore"; 
 
 
 const parse = require('html-react-parser');
@@ -18,10 +17,8 @@ function convertUnixTime(unix) {
         year = a.getFullYear(),
         months = ['January','February','March','April','May','June','July','August','September','October','November','December'],
         month = months[a.getMonth()],
-        date = a.getDate(),
-        hour = a.getHours(),
-        min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(),
-        sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+        date = a.getDate()
+
     return `${month} ${date}, ${year}`;
   }
 
@@ -31,58 +28,79 @@ function GameFetch (){
     const [show, setShow] = useState(false)
     const [gamedict, setGamedict] = useState([]) 
 
-
-    const [linksy, setLinksy] = useState([]) 
-    const [timestampy, setTimestampy] = useState([]) 
-
+    const [infox, setInfo] = useState([])
+    const infocollectionRef = collection(db, 'gametokens')
 
     const [checked, setChecked] = useState([]);
-
-    const [loading, setLoading] = useState(false)
-    const [gameslisted, setGameslisted] = useState([])
+    const [unchecked, setUnchecked] = useState([]);
 
 
-
-
-    const ref = firebase.firestore().collection("gametokens")
-    //console.log(ref)
-    function getGameslisted() {
-        setLoading(true);
-        ref.onSnapshot((querySnapshot)=>{
-            const gameslistedx = []
-            querySnapshot.forEach((doc) => {
-                gameslistedx.push(doc.data());
-            });
-            setGameslisted(gameslistedx);
-            setLoading(false);
+    async function updateFiret(adrsxy) {
+        //await addDoc(infocollectionRef,{address: 'anasheei2225345', viewed: true});
+        // Add a new document in collection "gametokens" with id 'addressX'
+        await setDoc(doc(db, "gametokens", adrsxy), {
+            address: adrsxy,
+            viewed: true
         });
-
     }
 
+    async function updateFiref(adrsxy) {
+        //await addDoc(infocollectionRef,{address: 'anasheei2225345', viewed: true});
+        // Add a new document in collection "gametokens" with id 'addressX'
+        await setDoc(doc(db, "gametokens", adrsxy), {
+            address: adrsxy,
+            viewed: false
+        });
+    }
+
+
     useEffect(()=>{
-        getGameslisted();
-    }, []);
+        const getInfo = async () => {
+            const info = await getDocs(infocollectionRef)
+            //console.log(info)
+            setInfo(info.docs.map((doc) => ({...doc.data(), id: doc.id})))
+            //infox.map((info) => {console.log(info)})
+        }
+        getInfo(); 
 
-    if(loading == false){
-        console.log(gameslisted)
-    }else{console.log("Loading the checklist DB!")}
+    }, [])
 
+    ///////// UPDATE LIST OF CHECKED ITEMS TO FIREBASE
+    console.log(unchecked)
+
+    checked.map((adrs)=>{
+        //console.log(adrs)
+        updateFiret(adrs)
+    })
+
+    unchecked.map((adrs)=>{
+        //console.log(adrs)
+        updateFiref(adrs)
+
+    })
 
 
 
 
 
     // Add/Remove checked item from list
-    const handleCheck = (event) => {
+    function handleCheck(event) {
         var updatedList = [...checked];
+        var unupdatedList = [...unchecked];
+
         if (event.target.checked) {
-        updatedList = [...checked, event.target.value];
+            updatedList = [...checked, event.target.value];
+        }else if(!event.target.checked){
+            //if UNchecked
+            unupdatedList = [...unchecked, event.target.value];
         } else {
-        updatedList.splice(checked.indexOf(event.target.value), 1);
+            updatedList.splice(checked.indexOf(event.target.value), 1);
         }
-        console.log(updatedList);
+        //console.log(updatedList);
         setChecked(updatedList);
-    };
+        setUnchecked(unupdatedList);
+
+    }
 
 
     // Generate string of checked items
