@@ -5,6 +5,7 @@ import MetaverseFetch from './components/ByVertical/metav/metaverse_tokens'
 import MemeFetch from './components/ByVertical/meme/meme_tokens'
 import NotagFetch from './components/ByVertical/notag/notag_tokens'
 import Refresh from './components/refresher'
+import MetavFetch from './components/ByVertical/metav/metaverse_tokens'
 
 function App() {
 
@@ -16,6 +17,10 @@ function App() {
                 <DataFetch />
                 <Refresh />
                 <GameFetch />
+                <DefiFetch />
+                <MemeFetch />
+                <MetavFetch />
+                <NotagFetch />
             </div>
         </div>
         )
