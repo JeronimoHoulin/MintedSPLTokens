@@ -72,7 +72,8 @@ function GameFetch (){
 
     }, [])
 
-    console.log(preshow)
+    //console.log(preshow)
+
     ///////// UPDATE LIST OF CHECKED ITEMS TO FIREBASE
     //console.log(unchecked)
 
@@ -299,18 +300,36 @@ function GameFetch (){
           console.error('The error is:', error);
         });
 
-
-
-
     }, [])
-
-
-
-
 
 
     //JSON.stringify(gamedict)
     //console.log(gamedict)
+
+    infox.map((item)=>{
+        //console.log(item)
+        if(item.viewed === true){
+            //console.log(item.address)
+
+            gamedict.map((itm)=>{
+                if(itm.Address === item.address){
+                    //console.log(itm.Address)
+                    itm[`statez`] = 'checked'
+                    //console.log(itm[`statez`])
+                }
+            })
+
+        }
+
+    })
+
+
+    useEffect(()=>{
+        setGamedict(gamedict)
+    }, [])
+
+
+    console.log(gamedict)
 
 
     return(
@@ -323,7 +342,6 @@ function GameFetch (){
             </button>    
 
             {
-
             show && 
                 <div className = "game_table">
                     
@@ -351,8 +369,9 @@ function GameFetch (){
                                 <td>{parse(`${item.Linkks}`)}</td>
                                 <td>{item.Timestamp}</td>
                                 <td>
-                                    <input class="toggle" defaultChecked={checked} value={item.Address} id={item.Address} type="checkbox" onChange={handleCheck} />
+                                    <input class="toggle" defaultChecked={item.statez} value={item.Address} id={item.Address} type="checkbox" onChange={handleCheck} />
                                 </td>
+
                             </tr>
                         ))}
 
