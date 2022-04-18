@@ -29,6 +29,7 @@ function GameFetch (){
     const [gamedict, setGamedict] = useState([]) 
 
     const [infox, setInfo] = useState([])
+    const [preshow, setPreshow] = useState([])
     const infocollectionRef = collection(db, 'gametokens')
 
     const [checked, setChecked] = useState([]);
@@ -59,14 +60,21 @@ function GameFetch (){
             const info = await getDocs(infocollectionRef)
             //console.log(info)
             setInfo(info.docs.map((doc) => ({...doc.data(), id: doc.id})))
-            //infox.map((info) => {console.log(info)})
+            infox.map((info) => {
+                //console.log(info)
+                if(info.viewed == true){
+                    setPreshow(info.address)
+                }
+            })
+
         }
         getInfo(); 
 
     }, [])
 
+    console.log(preshow)
     ///////// UPDATE LIST OF CHECKED ITEMS TO FIREBASE
-    console.log(unchecked)
+    //console.log(unchecked)
 
     checked.map((adrs)=>{
         //console.log(adrs)
@@ -298,6 +306,9 @@ function GameFetch (){
 
 
 
+
+
+
     //JSON.stringify(gamedict)
     //console.log(gamedict)
 
@@ -340,7 +351,7 @@ function GameFetch (){
                                 <td>{parse(`${item.Linkks}`)}</td>
                                 <td>{item.Timestamp}</td>
                                 <td>
-                                    <input class="toggle" value={item.Address} id="1" type="checkbox" onChange={handleCheck} />
+                                    <input class="toggle" defaultChecked={checked} value={item.Address} id={item.Address} type="checkbox" onChange={handleCheck} />
                                 </td>
                             </tr>
                         ))}
