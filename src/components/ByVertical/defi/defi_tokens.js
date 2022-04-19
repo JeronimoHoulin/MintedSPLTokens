@@ -150,7 +150,7 @@ function DefiFetch (){
             for(let i=0; i<token_300.length; i++){
 
                 //////////////////////////////////////////////////
-                const regex_defi = [/fin/, /defi/, /earn/, /money/, /inter/];
+                const regex_defi = [/fin/, /defi/, /earn/, /money/, /yield/, /interest/];
                 const tags_defi = token_300[i].tags;
                 //let matchin = regex_defi.some(rx => rx.test(tags));
                 //console.log(matchin);
