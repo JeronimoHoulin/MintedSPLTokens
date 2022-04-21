@@ -73,7 +73,7 @@ function DefiFetch (){
     }, [])
 
     //console.log(preshow)
-
+    console.log(infox)
     ///////// UPDATE LIST OF CHECKED ITEMS TO FIREBASE
     //console.log(unchecked)
 

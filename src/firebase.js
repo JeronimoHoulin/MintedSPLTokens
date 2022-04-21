@@ -4,15 +4,17 @@ import 'firebase/compat/firestore';
 import { initializeApp} from 'firebase/app';
 import { getFirestore } from '@firebase/firestore';
 
+console.log(process.env)
+
 const firebaseConfig = {
-  apiKey:"AIzaSyCRk65ziWg9hhMu7vho4JpHMe1pga1eoIA",
-  authDomain:"jerotesteo1.firebaseapp.com",
-  databaseURL:"https://jerotesteo1-default-rtdb.firebaseio.com",
-  projectId: "jerotesteo1",
-  storageBucket: "jerotesteo1.appspot.com",
-  messagingSenderId: "285230177474",
-  appId: "1:285230177474:web:b52f871e8692145f49ef5b",
-  measurementId: "G-T8BDRVR7RQ"
+  apiKey:process.env.REACT_APP_apiKey,
+  authDomain:process.env.REACT_APP_authDomain,
+  databaseURL:process.env.REACT_APP_databaseURL,
+  projectId:process.env.REACT_APP_projectId,
+  storageBucket:process.env.REACT_APP_storageBucket,
+  messagingSenderId:process.env.REACT_APP_messagingSenderId,
+  appId:process.env.REACT_APP_appId,
+  measurementId:process.env.REACT_APP_measurementId
 };
 /*
 firebase.initializeApp(firebaseConfig);
