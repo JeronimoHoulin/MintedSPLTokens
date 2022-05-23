@@ -1,5 +1,10 @@
 # First React app; Newly minted SPL token tracker-type dashboard.
 
+
+The intention of this project is for SolanaPrime's BD team to find new protocols in the Solana Ecosystem easily. (https://solanaprime.com/)
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Supports SolanaPrime's business development team (https://solanaprime.com).
