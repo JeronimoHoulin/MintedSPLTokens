@@ -7,6 +7,7 @@ function DataFetch (){
 
     const [tokens, setTokens] = useState([]) //tokens will be the name of the vriable to map in the rendering
     const [tokenz, setTokenz] = useState([]) 
+    
 
     useEffect(() => { 
         let url ="https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json"
