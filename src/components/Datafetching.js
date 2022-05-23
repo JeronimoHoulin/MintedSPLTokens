@@ -19,7 +19,7 @@ function DataFetch (){
             setTokens(token_list);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
-            const token_300 = token_list.slice(-800);
+            const token_300 = token_list.slice(-1500);
 
             setTokenz(token_300)
 

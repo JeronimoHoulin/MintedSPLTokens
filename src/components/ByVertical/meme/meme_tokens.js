@@ -143,7 +143,7 @@ function MemeFetch (){
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
                                   
-            const token_300 = token_list.slice(-800);
+            const token_300 = token_list.slice(-1500);
             console.log(token_300)
 
 

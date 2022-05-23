@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import "./defi.css";
 
@@ -143,7 +143,7 @@ function DefiFetch (){
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
                                   
-            const token_300 = token_list.slice(-800);
+            const token_300 = token_list.slice(-1500);
             console.log(token_300)
 
 
