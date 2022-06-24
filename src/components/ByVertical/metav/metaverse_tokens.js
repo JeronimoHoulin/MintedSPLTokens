@@ -137,14 +137,14 @@ function MetavFetch (){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data.tokens)
+            //console.log(data.tokens)
             let token_list = data.tokens;
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
                                   
             const token_300 = token_list.slice(-1500);
-            console.log(token_300)
+            //console.log(token_300)
 
 
             for(let i=0; i<token_300.length; i++){
@@ -328,8 +328,6 @@ function MetavFetch (){
         setMetavdict(metavdict)
     }, [])
 
-
-    console.log(metavdict)
 
 
     return(

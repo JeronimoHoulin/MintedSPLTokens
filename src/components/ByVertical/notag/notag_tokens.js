@@ -137,7 +137,7 @@ function NotagFetch (){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data.tokens)
+            //console.log(data.tokens)
             let token_list = data.tokens;
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
@@ -321,8 +321,6 @@ function NotagFetch (){
         setNotagdict(notagdict)
     }, [])
 
-
-    console.log(notagdict)
 
 
     return(

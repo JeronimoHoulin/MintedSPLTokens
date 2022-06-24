@@ -7,10 +7,15 @@ import NotagFetch from './components/ByVertical/notag/notag_tokens'
 import Refresh from './components/refresher'
 import MetavFetch from './components/ByVertical/metav/metaverse_tokens'
 
+import EthMinted from './components/ETHtokens/EthMinted'
+import ETHtokens from './components/ETHtokens/ETHtokens'
+
 function App() {
 
     return (
         <div className='App'>
+            <h1>Solana</h1>
+
             <h1>SolanaPrime SPL Token Tracker!</h1>
             
             <div className="components">
@@ -21,6 +26,12 @@ function App() {
                 <MemeFetch />
                 <MetavFetch />
                 <NotagFetch />
+                <h1>Ethereum</h1>
+                <br/>
+                <EthMinted>
+                    <ETHtokens/>
+                </EthMinted>
+
             </div>
         </div>
         )

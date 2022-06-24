@@ -72,8 +72,7 @@ function DefiFetch (){
 
     }, [])
 
-    //console.log(preshow)
-    console.log(infox)
+
     ///////// UPDATE LIST OF CHECKED ITEMS TO FIREBASE
     //console.log(unchecked)
 
@@ -137,14 +136,14 @@ function DefiFetch (){
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data.tokens)
+            //console.log(data.tokens)
             let token_list = data.tokens;
             //console.log(token_list.length);
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
                                   
             const token_300 = token_list.slice(-1500);
-            console.log(token_300)
+            //console.log(token_300)
 
 
             for(let i=0; i<token_300.length; i++){
@@ -329,7 +328,6 @@ function DefiFetch (){
     }, [])
 
 
-    console.log(defidict)
 
 
     return(
