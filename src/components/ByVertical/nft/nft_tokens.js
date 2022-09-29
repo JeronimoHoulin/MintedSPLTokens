@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import axios from "axios";
-import "./defi.css";
+import "./nft.css";
 
 import {db} from '../../../firebase'
 import { collection, doc, getDocs, setDoc } from "firebase/firestore"; 
@@ -23,14 +23,14 @@ function convertUnixTime(unix) {
   }
 
   
-function DefiFetch (){
+function NFTtokens (){
 
     const [show, setShow] = useState(false)
-    const [defidict, setDefidict] = useState([]) 
+    const [nftdict, setNftdict] = useState([]) 
 
     const [infox, setInfo] = useState([])
     const [preshow, setPreshow] = useState([])
-    const infocollectionRef = collection(db, 'defitokens')
+    const infocollectionRef = collection(db, 'nfttokens')
 
     const [checked, setChecked] = useState([]);
     const [unchecked, setUnchecked] = useState([]);
@@ -38,8 +38,8 @@ function DefiFetch (){
 
     async function updateFiret(adrsxy) {
         //await addDoc(infocollectionRef,{address: 'anasheei2225345', viewed: true});
-        // Add a new document in collection "defitokens" with id 'addressX'
-        await setDoc(doc(db, "defitokens", adrsxy), {
+        // Add a new document in collection "nfttokens" with id 'addressX'
+        await setDoc(doc(db, "nfttokens", adrsxy), {
             address: adrsxy,
             viewed: true
         });
@@ -47,8 +47,8 @@ function DefiFetch (){
 
     async function updateFiref(adrsxy) {
         //await addDoc(infocollectionRef,{address: 'anasheei2225345', viewed: true});
-        // Add a new document in collection "defitokens" with id 'addressX'
-        await setDoc(doc(db, "defitokens", adrsxy), {
+        // Add a new document in collection "nfttokens" with id 'addressX'
+        await setDoc(doc(db, "nfttokens", adrsxy), {
             address: adrsxy,
             viewed: false
         });
@@ -73,7 +73,7 @@ function DefiFetch (){
     }, [])
 
     //console.log(preshow)
-    console.log(infox)
+
     ///////// UPDATE LIST OF CHECKED ITEMS TO FIREBASE
     //console.log(unchecked)
 
@@ -128,7 +128,7 @@ function DefiFetch (){
 
 
 
-    let defi_tokens = [];
+    let nft_tokens = [];
     let adrs_arr = []
 
 
@@ -143,21 +143,21 @@ function DefiFetch (){
                                   //NOW THE TOKENS ARE ALL ADED TO " tokens "
 
                                   
-            const token_300 = token_list.slice(-1500);
+            const token_300 = token_list.slice(-10000);
             console.log(token_300)
 
 
             for(let i=0; i<token_300.length; i++){
 
                 //////////////////////////////////////////////////
-                const regex_defi = [/fin/, /defi/, /earn/, /money/, /yield/, /interest/];
-                const tags_defi = token_300[i].tags;
-                //let matchin = regex_defi.some(rx => rx.test(tags));
+                const regex_nft = [/nft/, /collection/, /non-fungible/, /art/, /jpeg/];
+                const tags_nft = token_300[i].tags;
+                //let matchin = regex_nft.some(rx => rx.test(tags));
                 //console.log(matchin);
             
-                if(regex_defi.some(rx => rx.test(tags_defi))===true && token_300[i].extensions){
+                if(regex_nft.some(rx => rx.test(tags_nft))===true && token_300[i].extensions){
                     
-                    defi_tokens.push({
+                    nft_tokens.push({
                         ID:i,
                         Address:token_300[i].address,
                         Name: token_300[i].name,
@@ -166,22 +166,22 @@ function DefiFetch (){
                         logo: token_300[i].logoURI,
                         Extensions:token_300[i].extensions,
                         Timestamp: "Loading...",
-                        Category: "Defi"
+                        Category: "Nft"
                       })
                 }
 
             }
 
             let time_arr = []
-            //console.log(defiz)
+            //console.log(nftz)
 
-            for(let i=0; i<defi_tokens.length;i++){
-                adrs_arr.push(defi_tokens[i].Address)
+            for(let i=0; i<nft_tokens.length;i++){
+                adrs_arr.push(nft_tokens[i].Address)
             }
             //console.log(adrs_arr)
 
 
-            if(defi_tokens.length !== 0){
+            if(nft_tokens.length !== 0){
 
                 let counter = 0
 
@@ -203,17 +203,17 @@ function DefiFetch (){
                             
                             //console.log(timest)
                             
-                            //PUSH INTO DEFI DICTIONARY
-                            defi_tokens[i]["Timestamp"] = convertUnixTime(timest)
+                            //PUSH INTO NFT DICTIONARY
+                            nft_tokens[i]["Timestamp"] = convertUnixTime(timest)
 
                         }else{
-                            defi_tokens[i]["Timestamp"] = "No time found..."
+                            nft_tokens[i]["Timestamp"] = "No time found..."
                         }
 
                         //console.log(time_arr.length)
-                        //console.log(defi_tokens)
-                        setDefidict(defi_tokens)
-                        //console.log(defidict)
+                        //console.log(nft_tokens)
+                        setNftdict(nft_tokens)
+                        //console.log(nftdict)
 
                         ////////////////////////////////////////////////////////////////////////////////////// TABLE
 
@@ -221,8 +221,8 @@ function DefiFetch (){
                     })                
                 }
 
-                for(let i = 0; i < defi_tokens.length; i++){
-                    [defi_tokens[i].Extensions].map(links=>{
+                for(let i = 0; i < nft_tokens.length; i++){
+                    [nft_tokens[i].Extensions].map(links=>{
                         var linksy = []
         
                         if(links){
@@ -266,7 +266,7 @@ function DefiFetch (){
                             linksy.push(stringit)
                         }
 
-                        defi_tokens[i]["Linkks"] = linksy
+                        nft_tokens[i]["Linkks"] = linksy
 
 
 
@@ -277,8 +277,8 @@ function DefiFetch (){
                 })}
 
 
-                setDefidict(defi_tokens)
-                //console.log(defidict)
+                setNftdict(nft_tokens)
+                //console.log(nftdict)
 
                 //SET INTERVAL FUNCTION TO RUN COLECTOR
 
@@ -303,15 +303,15 @@ function DefiFetch (){
     }, [])
 
 
-    //JSON.stringify(defidict)
-    //console.log(defidict)
+    //JSON.stringify(nftdict)
+    //console.log(nftdict)
 
     infox.map((item)=>{
         //console.log(item)
         if(item.viewed === true){
             //console.log(item.address)
 
-            defidict.map((itm)=>{
+            nftdict.map((itm)=>{
                 if(itm.Address === item.address){
                     //console.log(itm.Address)
                     itm[`statez`] = 'checked'
@@ -325,25 +325,25 @@ function DefiFetch (){
 
 
     useEffect(()=>{
-        setDefidict(defidict)
+        setNftdict(nftdict)
     }, [])
 
 
-    console.log(defidict)
+    console.log(nftdict)
 
 
     return(
 
-        <div className="defitable">
+        <div className="nfttable">
 
-            <h2>{`There are ${defidict.length} newly minted DEFI tokens.`}</h2>
+            <h2>{`There are ${nftdict.length} newly minted NFT tokens.`}</h2>
             <button onClick={() => setShow(!show)}>
                 Toggle: {show ? 'Hide' : 'Show'}
             </button>    
 
             {
             show && 
-                <div className = "defi_table">
+                <div className = "nft_table">
                     
                     <table>
                         <tr class="header">
@@ -359,7 +359,7 @@ function DefiFetch (){
 
 
 
-                        {defidict.map((item) => (
+                        {nftdict.map((item) => (
                             <tr>
                                 <img src={`${item.logo}`} width="34" height="35"></img>
                                 <td>{item.Symbol}</td>
@@ -389,4 +389,4 @@ function DefiFetch (){
 
 }
 
-export default DefiFetch
+export default NFTtokens
